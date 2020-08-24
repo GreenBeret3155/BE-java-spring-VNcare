@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.Khoa;
 import com.example.intern.repository.KhoaRepository;
 import com.example.intern.service.IKhoaService;
@@ -16,18 +17,24 @@ public class KhoaService implements IKhoaService {
 	private KhoaRepository khoaRepository;
 	
 	@Override
-	public List<Khoa> getAll(){
-		return khoaRepository.findAll();
+	public List<Khoa> getAll() throws ResourceNotFoundException{
+		List<Khoa> khoa = khoaRepository.findAll();
+		if(khoa == null) throw new ResourceNotFoundException("Khoa");
+		return khoa;
 	}
 	
 	@Override
-	public Khoa getOneById(Long id) {
-		return khoaRepository.findOne(id);
+	public Khoa getOneById(Long id) throws ResourceNotFoundException{
+		Khoa khoa = khoaRepository.findOne(id);
+		if(khoa == null) throw new ResourceNotFoundException("Khoa","id",id);
+		return khoa;
 	}
 	
 	@Override
-	public List<Khoa> findByCosoyteId(Long cosoyteid){
-		return khoaRepository.findByCosoyteId(cosoyteid);
+	public List<Khoa> findByCosoyteId(Long cosoyteid) throws ResourceNotFoundException{
+		List<Khoa> khoa = khoaRepository.findByCosoyteId(cosoyteid);
+		if(khoa == null) throw new ResourceNotFoundException("Khoa","cosoyteid",cosoyteid);
+		return khoa;
 	}
 	
 	@Override

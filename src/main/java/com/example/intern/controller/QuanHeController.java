@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class QuanHeController {
 	
 	@Autowired
@@ -66,11 +67,12 @@ public class QuanHeController {
 	}
 	
 	@DeleteMapping("/quanhe/benhnhan/{benhnhanchinhid}/{benhnhanphuid}")
-	public void deleteQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
+	public ResponseEntity<?> deleteQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
 			@PathVariable("benhnhanphuid")Long benhnhanphuid) {
 		BenhNhan benhnhanchinh = benhnhanService.getOneById(benhnhanchinhid);
 		BenhNhan benhnhanphu = benhnhanService.getOneById(benhnhanphuid);
 		quanheService.deleleByBenhnhanchinhIdAndBenhnhanphu(benhnhanchinh, benhnhanphu);
+		return ResponseEntity.ok().build();
 	}
 }
 

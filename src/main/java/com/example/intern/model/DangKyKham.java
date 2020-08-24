@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -36,6 +37,7 @@ public class DangKyKham {
 	@NotNull
 	private boolean trangthaikham;
 	
+	@Size(max = 50)
 	private String noidungkham;
 	
 	@NotNull
@@ -46,8 +48,10 @@ public class DangKyKham {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Benh benh;
 	
+	@Size(max = 500)
 	private String benhphu;
 	
+	@Size(max = 500)
 	private String mota;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false )

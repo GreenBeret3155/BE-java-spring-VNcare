@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
 import com.example.intern.repository.QuanHeRepository;
@@ -19,18 +20,24 @@ public class QuanHeService implements IQuanHeService {
 	private QuanHeRepository quanheRepository;
 	
 	@Override
-	public List<QuanHe> getAll(){
-		return quanheRepository.findAll();
+	public List<QuanHe> getAll() throws ResourceNotFoundException{
+		List<QuanHe> quanhe = quanheRepository.findAll();
+		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe");
+		return quanhe;
 	}
 		
 	@Override 
-	public 	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid) {
-		return quanheRepository.findByBenhnhanchinhId(benhnhanchinhid);
+	public 	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid) throws ResourceNotFoundException{
+		List<QuanHe> quanhe = quanheRepository.findByBenhnhanchinhId(benhnhanchinhid);
+		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanchinhid", benhnhanchinhid);
+		return quanhe;
 	}
 	
 	@Override
-	public QuanHe findByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) {
-		return quanheRepository.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid, benhnhanphuid);
+	public QuanHe findByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) throws ResourceNotFoundException{
+		QuanHe quanhe = quanheRepository.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid, benhnhanphuid);
+		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanphuid", benhnhanphuid);
+		return quanhe;
 	}
 	
 	@Override

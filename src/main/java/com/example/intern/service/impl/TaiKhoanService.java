@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.TaiKhoan;
 import com.example.intern.repository.TaiKhoanRepository;
 import com.example.intern.service.ITaiKhoanService;
@@ -16,13 +17,17 @@ public class TaiKhoanService implements ITaiKhoanService {
 	private TaiKhoanRepository taikhoanRepository;
 	
 	@Override
-	public List<TaiKhoan> getAll(){
-		return taikhoanRepository.findAll();
+	public List<TaiKhoan> getAll() throws ResourceNotFoundException{
+		List<TaiKhoan> taikhoan = taikhoanRepository.findAll();
+		if(taikhoan == null) throw new ResourceNotFoundException("TaiKhoan");
+		return taikhoan;
 	}
 	
 	@Override
-	public TaiKhoan getOneById(Long id) {
-		return taikhoanRepository.findOne(id);
+	public TaiKhoan getOneById(Long id) throws ResourceNotFoundException{
+		TaiKhoan taikhoan = taikhoanRepository.findOne(id);
+		if(taikhoan == null) throw new ResourceNotFoundException("TaiKhoan", "id", id);
+		return taikhoan;
 	}
 	
 	@Override

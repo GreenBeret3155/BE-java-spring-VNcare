@@ -10,5 +10,6 @@ public interface IDonThuocService {
 	DonThuoc getOneById(Long id);
 	List<DonThuoc> findByDangKyKhamId(Long dangkykhamid);
 	DonThuoc save(DonThuoc donthuoc);
+	void delete(Long id);
 	void deleteByDangkykhamId(Long dangkykhamid);
 }

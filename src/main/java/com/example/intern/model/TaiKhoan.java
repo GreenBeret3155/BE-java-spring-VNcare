@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -20,14 +21,18 @@ public class TaiKhoan {
 	private Long id;
 	
 	@NotBlank
+	@Size(max = 50)
 	private String email;
 	
 	@NotBlank
+	@Size(max = 20)
 	private String password;
 	
 	@NotBlank
+	@Size(max = 20)
 	private String sdt;
 	
+	@Size(max = 50)
 	private String hoten;
 	
 	

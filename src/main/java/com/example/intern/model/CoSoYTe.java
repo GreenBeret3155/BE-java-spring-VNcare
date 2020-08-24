@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -23,6 +24,7 @@ public class CoSoYTe {
 	private Long id;
 	
 	@NotBlank
+	@Size(max = 50)
 	private String ten;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

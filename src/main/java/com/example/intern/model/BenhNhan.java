@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,6 +30,7 @@ public class BenhNhan {
 	private Long id;
 	
 	@NotBlank
+	@Size(max = 50)
 	private String ten ;
 	
 //	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -36,17 +38,21 @@ public class BenhNhan {
 	private Date ngaysinh;
 	
 	@NotBlank
-	private String gioitinh;
+	private Boolean gioitinh;
 	
+	@Size(max = 20)
 	private String cmnd;
 	
 	private Date ngaycap;
 	
+	@Size(max = 20)
 	private String noicap;
 	
+	@Size(max = 20)
 	private String bhyt;
 	
 	@NotBlank
+	@Size(max = 500)
 	private String diachi;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -61,7 +67,7 @@ public class BenhNhan {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BenhNhan(Long id, String ten, Date ngaysinh, String gioitinh, String cmnd, Date ngaycap, String noicap,
+	public BenhNhan(Long id, String ten, Date ngaysinh, Boolean gioitinh, String cmnd, Date ngaycap, String noicap,
 			String bhyt, String diachi, TaiKhoan taikhoan) {
 		super();
 		this.id = id;
@@ -100,11 +106,11 @@ public class BenhNhan {
 		this.ngaysinh = ngaysinh;
 	}
 
-	public String getGioitinh() {
+	public Boolean getGioitinh() {
 		return gioitinh;
 	}
 
-	public void setGioitinh(String gioitinh) {
+	public void setGioitinh(Boolean gioitinh) {
 		this.gioitinh = gioitinh;
 	}
 

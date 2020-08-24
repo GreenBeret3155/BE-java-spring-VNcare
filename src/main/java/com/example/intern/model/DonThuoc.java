@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -25,8 +26,9 @@ public class DonThuoc {
 	private Long id;
 	
 	@NotNull 
-	private int soluong;
+	private float soluong;
 	
+	@Size(max = 100)
 	private String huongdan;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -51,7 +53,7 @@ public class DonThuoc {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DonThuoc(Long id, int soluong, String huongdan, Thuoc thuoc, DonViTinh donvitinh, DangKyKham dangkykham) {
+	public DonThuoc(Long id, float soluong, String huongdan, Thuoc thuoc, DonViTinh donvitinh, DangKyKham dangkykham) {
 		super();
 		this.id = id;
 		this.soluong = soluong;
@@ -94,11 +96,11 @@ public class DonThuoc {
 		this.dangkykham = dangkykham;
 	}
 
-	public int getSoluong() {
+	public float getSoluong() {
 		return soluong;
 	}
 
-	public void setSoluong(int soluong) {
+	public void setSoluong(float soluong) {
 		this.soluong = soluong;
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.intern.model.BenhNhan;
 import com.example.intern.repository.BenhNhanRepository;
 import com.example.intern.service.IBenhNhanService;
+import com.example.intern.exception.*;
 
 @Service
 public class BenhNhanService implements IBenhNhanService {
@@ -16,18 +17,24 @@ public class BenhNhanService implements IBenhNhanService {
 	private BenhNhanRepository benhnhanRepository;
 	
 	@Override
-	public List<BenhNhan> getAll(){
-		return benhnhanRepository.findAll();
+	public List<BenhNhan> getAll() throws ResourceNotFoundException{
+		List<BenhNhan> benhnhan = benhnhanRepository.findAll();
+		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan");
+		return benhnhan;
 	}
 	
 	@Override
-	public BenhNhan getOneById(Long id) {
-		return benhnhanRepository.getOne(id);
+	public BenhNhan getOneById(Long id) throws ResourceNotFoundException{
+		BenhNhan benhnhan = benhnhanRepository.getOne(id);
+		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","id",id);
+		return benhnhan;
 	}
 	
 	@Override
-	public BenhNhan findByTaikhoanId(Long taikhoanid) {
-		return benhnhanRepository.findByTaikhoanId(taikhoanid);
+	public BenhNhan findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
+		BenhNhan benhnhan = benhnhanRepository.findByTaikhoanId(taikhoanid);
+		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","taikhoanid",taikhoanid);
+		return benhnhan;
 	}
 	
 	@Override

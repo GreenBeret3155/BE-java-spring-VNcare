@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ import com.example.intern.service.IDonViTinhService;
 import com.example.intern.service.IThuocService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class DonThuocController {
 	
 	@Autowired
@@ -88,9 +89,17 @@ public class DonThuocController {
 		return donthuocService.save(donthuocRequest);
 	}
 	
+	@DeleteMapping("/donthuoc/{id}")
+	public ResponseEntity<?> deleteDonThuoc(@PathVariable("id")Long id) {
+		donthuocService.deleteByDangkykhamId(id);
+		return ResponseEntity.ok().build();
+	}
+	
+	
 	@DeleteMapping("/donthuoc/dangkykham/{dangkykhamid}")
-	public void deleteDonThuoc(@PathVariable("dangkykhamid")Long dangkykhamid) {
+	public ResponseEntity<?> deleteDonThuocByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid) {
 		donthuocService.deleteByDangkykhamId(dangkykhamid);
+		return ResponseEntity.ok().build();
 	}
 	
 }

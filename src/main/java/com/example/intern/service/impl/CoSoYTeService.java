@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.CoSoYTe;
 import com.example.intern.repository.CoSoYTeRepository;
 import com.example.intern.service.ICoSoYTeService;
@@ -16,18 +17,24 @@ public class CoSoYTeService implements ICoSoYTeService {
 	public CoSoYTeRepository cosoyteRepository;
 	
 	@Override
-	public List<CoSoYTe> getAll(){
-		return cosoyteRepository.findAll(); 
+	public List<CoSoYTe> getAll() throws ResourceNotFoundException{
+		List<CoSoYTe> cosoyte = cosoyteRepository.findAll();
+		if(cosoyte == null ) throw new ResourceNotFoundException("CoSoYTe");
+		return cosoyte; 
 	}
 	
 	@Override
-	public CoSoYTe getOneById(Long id) {
-		return cosoyteRepository.findOne(id);
+	public CoSoYTe getOneById(Long id) throws ResourceNotFoundException{
+		CoSoYTe cosoyte =  cosoyteRepository.findOne(id);
+		if(cosoyte == null ) throw new ResourceNotFoundException("CoSoYTe","id",id);
+		return cosoyte;
 	}
 	
 	@Override
-	public List<CoSoYTe> findByTinhId(Long tinhid){
-		return cosoyteRepository.findByTinhId(tinhid);
+	public List<CoSoYTe> findByTinhId(Long tinhid) throws ResourceNotFoundException{
+		List<CoSoYTe> cosoyte = cosoyteRepository.findByTinhId(tinhid);
+		if(cosoyte == null ) throw new ResourceNotFoundException("CoSoYTe","tinhid", tinhid);
+		return cosoyte;
 	}
 	
 	@Override

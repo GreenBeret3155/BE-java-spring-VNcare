@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ import com.example.intern.service.IBenhService;
 import com.example.intern.service.IDangKyKhamService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class DangKyKhamController {
 	
 	@Autowired
@@ -141,8 +142,9 @@ public class DangKyKhamController {
 	}
 	
 	@DeleteMapping("/dangkykham/{id}")
-	public void delete(@PathVariable("id")Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id")Long id) {
 		dangkykhamService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 	
 }	

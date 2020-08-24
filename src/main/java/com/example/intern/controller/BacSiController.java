@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.example.intern.service.IKhoaService;
 import com.example.intern.service.ITaiKhoanService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class BacSiController {
 	
 	@Autowired 
@@ -49,7 +50,7 @@ public class BacSiController {
 		return bacsiService.findByKhoaId(khoaid);
 	}
 	
-	@GetMapping("/bacsi/khoa/{taikhoanid}")
+	@GetMapping("/bacsi/taikhoan/{taikhoanid}")
 	public BacSi findByTaikhoanId(@PathVariable("taikhoanid") Long taikhoanid){
 		return bacsiService.findByTaikhoanId(taikhoanid);
 	}
@@ -86,8 +87,9 @@ public class BacSiController {
 	}
 	
 	@DeleteMapping("/bacsi/{id}")
-	public void deleteBacSi(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteBacSi(@PathVariable("id") Long id) {
 		bacsiService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 	
 }

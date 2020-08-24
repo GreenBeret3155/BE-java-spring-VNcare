@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -27,13 +28,17 @@ public class BacSi {
 	private Long id;
 	
 	@NotBlank
+	@Size(max = 50)
 	private String ten;
 	
 	@NotBlank
+	@Size(max = 50)
 	private String chuyenkhoa;
 	
+	@Size(max = 50)
 	private String trinhdo;
 	
+	@Size(max = 200)
 	private String mota;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

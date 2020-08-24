@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.DonThuoc;
 import com.example.intern.repository.DonThuocRepository;
 import com.example.intern.service.IDonThuocService;
@@ -18,23 +19,34 @@ public class DonThuocService implements IDonThuocService  {
 	private DonThuocRepository donthuocRepository;
 	
 	@Override
-	public List<DonThuoc> getAll(){
-		return donthuocRepository.findAll();
+	public List<DonThuoc> getAll() throws ResourceNotFoundException{
+		List<DonThuoc> donthuoc = donthuocRepository.findAll();
+		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
+		return donthuoc;
 	}
 	
 	@Override
-	public DonThuoc getOneById(Long id) {
-		return donthuocRepository.findOne(id);
+	public DonThuoc getOneById(Long id) throws ResourceNotFoundException{
+		DonThuoc donthuoc = donthuocRepository.findOne(id);
+		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
+		return donthuoc;
 	}
 	
 	@Override
-	public List<DonThuoc> findByDangKyKhamId(Long dangkykhamid){
-		return donthuocRepository.findByDangkykhamId(dangkykhamid);
+	public List<DonThuoc> findByDangKyKhamId(Long dangkykhamid) throws ResourceNotFoundException{
+		List<DonThuoc> donthuoc = donthuocRepository.findByDangkykhamId(dangkykhamid);
+		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
+		return donthuoc;
 	}
 	
 	@Override
 	public DonThuoc save(DonThuoc donthuoc) {
 		return donthuocRepository.save(donthuoc);
+	}
+	
+	@Override 
+	public void delete(Long id) {
+		donthuocRepository.delete(id);
 	}
 	
 	@Override

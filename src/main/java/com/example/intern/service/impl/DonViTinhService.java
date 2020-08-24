@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.DonViTinh;
 import com.example.intern.repository.DonViTinhRepository;
 import com.example.intern.service.IDonViTinhService;
@@ -16,13 +17,17 @@ public class DonViTinhService implements IDonViTinhService {
 	private DonViTinhRepository donvitinhRepository;
 	
 	@Override
-	public List<DonViTinh> getAll(){
-		return donvitinhRepository.findAll();
+	public List<DonViTinh> getAll() throws ResourceNotFoundException{
+		List<DonViTinh> donvitinh = donvitinhRepository.findAll();
+		if(donvitinh == null) throw new ResourceNotFoundException("DonViTinh");
+		return donvitinh;
 	}
 	
 	@Override
-	public DonViTinh getOneById(Long id) {
-		return donvitinhRepository.findOne(id);
+	public DonViTinh getOneById(Long id) throws ResourceNotFoundException{
+		DonViTinh donvitinh = donvitinhRepository.findOne(id);
+		if(donvitinh == null) throw new ResourceNotFoundException("DonViTinh","id", id);
+		return donvitinh;
 	}
 	
 	@Override

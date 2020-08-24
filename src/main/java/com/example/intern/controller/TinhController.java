@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import com.example.intern.model.Tinh;
 import com.example.intern.service.ITinhService; 
   
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class TinhController {
 	
 	@Autowired
@@ -45,48 +46,15 @@ public class TinhController {
 		Tinh tinhmodel = service.getOneById(id);
 		
 		tinhmodel.setTen(tinh.getTen());
-		tinhmodel.setMota(tinh.getMota());
 		
 		return service.save(tinhmodel);
 	}
 	
 	@DeleteMapping("/tinh/{id}")
-	public void deleteTinh(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteTinh(@PathVariable("id") Long id) {
 		service.delete(id);
+		return ResponseEntity.ok().build();
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
