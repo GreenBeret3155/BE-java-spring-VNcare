@@ -50,12 +50,12 @@ public class DonThuocController {
 		return donthuocService.getOneById(id);
 	}
 	
-	@GetMapping("/donthuoc/dangkykham/{dangkykhamid}")
+	@GetMapping("/dangkykham/{dangkykhamid}/donthuoc")
 	public List<DonThuoc> findByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid){
 		return donthuocService.findByDangKyKhamId(dangkykhamid);
 	}
 	
-	@PostMapping("/donthuoc/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}")
+	@PostMapping("/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc")
 	public DonThuoc createDonThuoc (@PathVariable("dangkykhamid")Long dangkykhamid,
 			@PathVariable("thuocid")Long thuocid,
 			@PathVariable("donvitinhid")Long donvitinhid,
@@ -70,7 +70,7 @@ public class DonThuocController {
 		return donthuocService.save(donthuocRequest);
 	}
 	
-	@PutMapping("/donthuoc/{id}/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}")
+	@PutMapping("/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc/{id}")
 	public DonThuoc updateDonThuoc (@PathVariable("id")Long id,
 			@PathVariable("dangkykhamid")Long dangkykhamid,
 			@PathVariable("thuocid")Long thuocid,
@@ -96,7 +96,7 @@ public class DonThuocController {
 	}
 	
 	
-	@DeleteMapping("/donthuoc/dangkykham/{dangkykhamid}")
+	@DeleteMapping("/dangkykham/{dangkykhamid}/donthuoc")
 	public ResponseEntity<?> deleteDonThuocByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid) {
 		donthuocService.deleteByDangkykhamId(dangkykhamid);
 		return ResponseEntity.ok().build();

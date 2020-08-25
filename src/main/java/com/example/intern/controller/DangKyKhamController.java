@@ -50,22 +50,22 @@ public class DangKyKhamController {
 		return dangkykhamService.getOneById(id);
 	}
 	
-	@GetMapping("/dangkykham/benhchinh/{benhchinhid}")
+	@GetMapping("/benhchinh/{benhchinhid}/dangkykham")
 	public List<DangKyKham> findByBenhchinhId(@PathVariable("benhchinhid")Long benhchinhid) {
 		return dangkykhamService.findByBenhId(benhchinhid);
 	}
 	
-	@GetMapping("/dangkykham/bacsi/{bacsiid}")
+	@GetMapping("/bacsi/{bacsiid}/dangkykham")
 	public List<DangKyKham> findByBacsiId(@PathVariable("bacsiid")Long bacsiid){
 		return dangkykhamService.findByBacsiId(bacsiid);
 	}
 	
-	@GetMapping("/dangkykham/benhnhan/{benhnhanid}")
+	@GetMapping("/benhnhan/{benhnhanid}/dangkykham")
 	public List<DangKyKham> findByBenhnhanId(@PathVariable("benhnhanid")Long benhnhanid){
 		return dangkykhamService.findByBenhnhanId(benhnhanid);
 	}
 	
-	@PostMapping("/dangkykham/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}")
+	@PostMapping("/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}/dangkykham")
 	public DangKyKham createDangKyKham(@PathVariable("benhnhanid")Long benhnhanid,
 			@PathVariable("bacsiid")Long bacsiid,
 			@PathVariable("benhchinhid")Long benhchinhid,
@@ -81,7 +81,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykhamRequest);
 	}
 	
-	@PostMapping("/dangkykham/benhnhan/{benhnhanid}/bacsi/{bacsiid}")
+	@PostMapping("/benhnhan/{benhnhanid}/bacsi/{bacsiid}/dangkykham")
 	public DangKyKham createDangKyKhamWhithoutBenhchinhId(@PathVariable("benhnhanid")Long benhnhanid,
 			@PathVariable("bacsiid")Long bacsiid,
 			@Valid @RequestBody DangKyKham dangkykhamRequest) {
@@ -94,7 +94,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykhamRequest);
 	}
 	
-	@PutMapping("/dangkykham/{id}/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}")
+	@PutMapping("/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}/dangkykham/{id}")
 	public DangKyKham createDangKyKham(@PathVariable("id")Long id,
 			@PathVariable("benhnhanid")Long benhnhanid,
 			@PathVariable("benhchinhid")Long benhchinhid,
@@ -119,7 +119,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykham);
 	}
 	
-	@PutMapping("/dangkykham/{id}/benhnhan/{benhnhanid}/bacsi/{bacsiid}")
+	@PutMapping("/benhnhan/{benhnhanid}/bacsi/{bacsiid}/dangkykham/{id}")
 	public DangKyKham createDangKyKhamWithoutBenhchinhId(@PathVariable("id")Long id,
 			@PathVariable("benhnhanid")Long benhnhanid,
 			@PathVariable("bacsiid")Long bacsiid,

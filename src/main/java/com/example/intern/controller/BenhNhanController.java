@@ -40,12 +40,12 @@ public class BenhNhanController {
 		return benhnhanService.getOneById(id);
 	}
 	
-	@GetMapping("/benhnhan/taikhoan/{taikhoanid}")
+	@GetMapping("/taikhoan/{taikhoanid}/benhnhan")
 	public BenhNhan findByTaikhoanId(@PathVariable("taikhoanid") Long taikhoanid ) {
 		return benhnhanService.findByTaikhoanId(taikhoanid);
 	}
 	
-	@PostMapping("/benhnhan/taikhoan/{taikhoanid}")
+	@PostMapping("/taikhoan/{taikhoanid}/benhnhan")
 	public BenhNhan createBenhNhan(@PathVariable("taikhoanid") Long taikhoanid, 
 			@Valid @RequestBody BenhNhan benhnhanRequest) {
 		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
@@ -59,25 +59,25 @@ public class BenhNhanController {
 		return benhnhanService.save(benhnhan);
 	}
 	
-	@PutMapping("/benhnhan/{id}/taikhoan/{taikhoanid}")
-	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
-			@PathVariable("taikhoanid") Long taikhoanid,
-			@Valid @RequestBody BenhNhan benhnhanRequest) {
-		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
-		BenhNhan benhnhan = benhnhanService.getOneById(id);
-		
-		benhnhan.setTen(benhnhanRequest.getTen());
-		benhnhan.setNgaysinh(benhnhanRequest.getNgaysinh());
-		benhnhan.setGioitinh(benhnhanRequest.getGioitinh());
-		benhnhan.setCmnd(benhnhanRequest.getCmnd());
-		benhnhan.setNgaycap(benhnhanRequest.getNgaycap());
-		benhnhan.setNoicap(benhnhanRequest.getNoicap());
-		benhnhan.setBhyt(benhnhanRequest.getBhyt());
-		benhnhan.setDiachi(benhnhanRequest.getDiachi());
-		benhnhan.setTaikhoan(taikhoan);
-		
-		return benhnhanService.save(benhnhan);
-	}
+//	@PutMapping("/taikhoan/{taikhoanid}/benhnhan/{id}")
+//	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
+//			@PathVariable("taikhoanid") Long taikhoanid,
+//			@Valid @RequestBody BenhNhan benhnhanRequest) {
+//		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
+//		BenhNhan benhnhan = benhnhanService.getOneById(id);
+//		
+//		benhnhan.setTen(benhnhanRequest.getTen());
+//		benhnhan.setNgaysinh(benhnhanRequest.getNgaysinh());
+//		benhnhan.setGioitinh(benhnhanRequest.getGioitinh());
+//		benhnhan.setCmnd(benhnhanRequest.getCmnd());
+//		benhnhan.setNgaycap(benhnhanRequest.getNgaycap());
+//		benhnhan.setNoicap(benhnhanRequest.getNoicap());
+//		benhnhan.setBhyt(benhnhanRequest.getBhyt());
+//		benhnhan.setDiachi(benhnhanRequest.getDiachi());
+//		benhnhan.setTaikhoan(taikhoan);
+//		
+//		return benhnhanService.save(benhnhan);
+//	}
 	
 	@PutMapping("/benhnhan/{id}")
 	public BenhNhan updateBenhNhanWithoutTaikhoanId(@PathVariable("id")Long id,

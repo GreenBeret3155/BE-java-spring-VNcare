@@ -40,21 +40,29 @@ public class KhoaController {
 		return khoaService.getOneById(id);
 	}
 	
-	@GetMapping("/khoa/cosoyte/{cosoyteid}")
+	@GetMapping("/cosoyte/{cosoyteid}/khoa")
 	public List<Khoa> findByCosoyteId(@PathVariable("cosoyteid")  Long cosoyteid){
 		return khoaService.findByCosoyteId(cosoyteid);
 	}
 	
-	@PostMapping("/khoa/cosoyte/{cosoyteid}")
+	@PostMapping("/cosoyte/{cosoyteid}/khoa")
 	public Khoa createKhoa(@PathVariable Long cosoyteid,
 			@Valid @RequestBody Khoa khoaRequest) {
 		CoSoYTe coSoYTe = cosoyteService.getOneById(cosoyteid);
 		khoaRequest.setCosoyte(coSoYTe);
 		return khoaService.save(khoaRequest);
 	}
-	
-	@PutMapping("/khoa/{khoaid}/cosoyte/{cosoyteid}")
+	@PutMapping("/khoa/{khoaid}")
 	public Khoa updateKhoa(@PathVariable("khoaid") Long khoaid,
+			@Valid @RequestBody Khoa khoaRequest){
+		Khoa khoa = khoaService.getOneById(khoaid);
+		khoa.setTen(khoaRequest.getTen());
+		
+		return khoaService.save(khoa);
+	}
+	
+	@PutMapping("/cosoyte/{cosoyteid}/khoa/{khoaid}")
+	public Khoa updateKhoaByCSYTId(@PathVariable("khoaid") Long khoaid,
 			@PathVariable("cosoyteid") Long cosoyteid,
 			@Valid @RequestBody Khoa khoaRequest){
 		CoSoYTe cosoyte = cosoyteService.getOneById(cosoyteid);
