@@ -40,12 +40,12 @@ public class CoSoYTeController {
 		return cosoyteService.getOneById(id);
 	}
 	
-	@GetMapping("/cosoyte/tinh/{tinhid}")
+	@GetMapping("/tinh/{tinhid}/cosoyte")
 	public List<CoSoYTe> finhByTinhId(@PathVariable("tinhid") Long tinhid){
 		return cosoyteService.findByTinhId(tinhid);
 	}
 	
-	@PostMapping("/cosoyte/tinh/{tinhid}")
+	@PostMapping("/tinh/{tinhid}/cosoyte")
 	public CoSoYTe createCoSoYTe(@PathVariable("tinhid") Long tinhid,
 			@Valid @RequestBody CoSoYTe cosoyteRequest) {
 		Tinh tinh = tinhService.getOneById(tinhid);
@@ -53,8 +53,17 @@ public class CoSoYTeController {
 		return cosoyteService.save(cosoyteRequest);
 	}
 	
-	@PutMapping("/cosoyte/{cosoyteid}/tinh/{tinhid}")
+	@PutMapping("/cosoyte/{cosoyteid}")
 	public CoSoYTe updateCoSoYTe(@PathVariable("cosoyteid") Long csid,
+			@Valid @RequestBody CoSoYTe cosoyteRequest ) {
+		CoSoYTe cs = cosoyteService.getOneById(csid);
+		cs.setTen(cosoyteRequest.getTen());
+		
+		return cosoyteService.save(cs);
+	}
+	
+	@PutMapping("/tinh/{tinhid}/cosoyte/{cosoyteid}")
+	public CoSoYTe updateCoSoYTeByTinhId(@PathVariable("cosoyteid") Long csid,
 			@PathVariable("tinhid") Long tinhid,
 			@Valid @RequestBody CoSoYTe cosoyteRequest ) {
 		Tinh tinh = tinhService.getOneById(tinhid);

@@ -45,17 +45,17 @@ public class BacSiController {
 		return bacsiService.getOneById(id);
 	}
 	
-	@GetMapping("/bacsi/khoa/{khoaid}")
+	@GetMapping("/khoa/{khoaid}/bacsi")
 	public List<BacSi> findByKhoaId(@PathVariable("khoaid") Long khoaid){
 		return bacsiService.findByKhoaId(khoaid);
 	}
 	
-	@GetMapping("/bacsi/taikhoan/{taikhoanid}")
+	@GetMapping("/taikhoan/{taikhoanid}/bacsi")
 	public BacSi findByTaikhoanId(@PathVariable("taikhoanid") Long taikhoanid){
 		return bacsiService.findByTaikhoanId(taikhoanid);
 	}
 	
-	@PostMapping("/bacsi/khoa/{khoaid}/taikhoan/{taikhoanid}")
+	@PostMapping("/khoa/{khoaid}/taikhoan/{taikhoanid}/bacsi")
 	public BacSi createBacSi(@PathVariable("khoaid") Long khoaid,
 			@PathVariable("taikhoanid") Long taikhoanid,
 			@Valid @RequestBody BacSi bacsiRequest) {
@@ -67,21 +67,31 @@ public class BacSiController {
 		return bacsiService.save(bacsiRequest);
 	}
 	
-	@PutMapping("/bacsi/{bacsiid}/khoa/{khoaid}/taikhoan/{taikhoanid}")
+	@PutMapping("/bacsi/{bacsiid}")
 	public BacSi updateBacSi(@PathVariable("bacsiid") Long bacsiid,
+			@Valid @RequestBody BacSi bacsiRequest) {
+		BacSi bacsi = bacsiService.getOneById(bacsiid);
+		
+		bacsi.setTen(bacsiRequest.getTen());
+		bacsi.setChuyenkhoa(bacsiRequest.getChuyenkhoa());
+		bacsi.setTrinhdo(bacsiRequest.getTrinhdo());
+		bacsi.setMota(bacsiRequest.getMota());
+		
+		return bacsiService.save(bacsi);
+	}
+	
+	@PutMapping("/khoa/{khoaid}/bacsi/{bacsiid}")
+	public BacSi updateBacSiByKhoaId(@PathVariable("bacsiid") Long bacsiid,
 			@PathVariable("khoaid") Long khoaid,
-			@PathVariable("taikhoanid") Long taikhoanid,
 			@Valid @RequestBody BacSi bacsiRequest) {
 		Khoa khoa = khoaService.getOneById(khoaid);
 		BacSi bacsi = bacsiService.getOneById(bacsiid);
-		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
 		
 		bacsi.setTen(bacsiRequest.getTen());
 		bacsi.setChuyenkhoa(bacsiRequest.getChuyenkhoa());
 		bacsi.setTrinhdo(bacsiRequest.getTrinhdo());
 		bacsi.setMota(bacsiRequest.getMota());
 		bacsi.setKhoa(khoa);
-		bacsi.setTaikhoan(taikhoan);
 		
 		return bacsiService.save(bacsi);
 	}
