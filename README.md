@@ -27,11 +27,13 @@ GET/cosoyte
 
 GET/cosoyte/{id}
 
-GET/cosoyte/tinh/{tinhid}
+GET/tinh/{tinhid}/cosoyte
 
-POST/cosoyte/tinh/{tinhid}
+POST/tinh/{tinhid}/cosoyte
 
-PUT/cosoyte/{cosoyteid}/tinh/{tinhid}
+PUT/cosoyte/{cosoyteid}
+
+PUT/tinh/{tinhid}/cosoyte/{cosoyteid}
 
 DELETE/cosoyte/{id}
 ### /khoa
@@ -39,26 +41,31 @@ GET/khoa
 
 GET/khoa/{id}
 
-GET/khoa/cosoyte/{cosoyteid}
+GET/cosoyte/{cosoyteid}/khoa
 
-POST/khoa/cosoyte/{cosoyteid}
+POST/cosoyte/{cosoyteid}/khoa
 
-PUT/khoa/{khoaid}/cosoyte/{cosoyteid}
+PUT/khoa/{khoaid}
+
+PUT/cosoyte/{cosoyteid}/khoa/{khoaid}
 
 DELETE/khoa/{id}
-
 ### /bacsi
 GET/bacsi
 
 GET/bacsi/{id}
 
-GET/bacsi/khoa/{khoaid}
+GET/khoa/{khoaid}/bacsi
 
-GET/bacsi/khoa/{taikhoanid}
+GET/taikhoan/{taikhoanid}/bacsi
 
-POST/bacsi/khoa/{khoaid}/taikhoan/{taikhoanid}
+POST/khoa/{khoaid}/taikhoan/{taikhoanid}/bacsi
 
-PUT/bacsi/{bacsiid}/khoa/{khoaid}/taikhoan/{taikhoanid}
+PUT/bacsi/{bacsiid}
+
+PUT/khoa/{khoaid}/bacsi/{bacsiid}
+
+DELETE/bacsi/{id}
 
 DELETE/bacsi/{id}	
 ### /benhnhan
@@ -66,13 +73,11 @@ GET/benhnhan
 
 GET/benhnhan/{id}
 
-GET/benhnhan/taikhoan/{taikhoanid}
+GET/taikhoan/{taikhoanid}/benhnhan
 
-POST/benhnhan/taikhoan/{taikhoanid}
+POST/taikhoan/{taikhoanid}/benhnhan
 
 POST/benhnhan
-
-PUT/benhnhan/{id}/taikhoan/{taikhoanid}
 
 PUT/benhnhan/{id}
 
@@ -80,31 +85,31 @@ DELETE/benhnhan/{id}
 ### /quanhe
 GET/quanhe
 
-GET/quanhe/benhnhan/{benhnhanchinhid}
+GET/benhnhan/{benhnhanchinhid}/quanhe
 
-POST/quanhe/benhnhan/{benhnhanchinhid}/{benhnhanphuid}
+POST/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe
 
-PUT/quanhe/benhnhan/{benhnhanchinhid}/{benhnhanphuid}
+PUT/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe
 
-DELETE/quanhe/benhnhan/{benhnhanchinhid}/{benhnhanphuid}
+DELETE/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe
 ### /dangkykham
 GET/dangkykham
 
 GET/dangkykham/{id}
 
-GET/dangkykham/benhchinh/{benhchinhid}
+GET/benhchinh/{benhchinhid}/dangkykham
 
-GET/dangkykham/bacsi/{bacsiid}
+GET/bacsi/{bacsiid}/dangkykham
 
-GET/dangkykham/benhnhan/{benhnhanid}
+GET/benhnhan/{benhnhanid}/dangkykham
 
-POST/dangkykham/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}	
+POST/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}/dangkykham	
 
-POST/dangkykham/benhnhan/{benhnhanid}/bacsi/{bacsiid}
+POST/benhnhan/{benhnhanid}/bacsi/{bacsiid}/dangkykham
 
-PUT/dangkykham/{id}/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}
+PUT/benhnhan/{benhnhanid}/bacsi/{bacsiid}/benhchinh/{benhchinhid}/dangkykham/{id}
 
-PUT/dangkykham/{id}/benhnhan/{benhnhanid}/bacsi/{bacsiid}
+PUT/benhnhan/{benhnhanid}/bacsi/{bacsiid}/dangkykham/{id}
 
 DELETE/dangkykham/{id}
 ### /benh
@@ -144,10 +149,12 @@ GET/donthuoc
 
 GET/donthuoc/{id}
 
-GET/donthuoc/dangkykham/{dangkykhamid}
+GET/dangkykham/{dangkykhamid}/donthuoc
 
-POST/donthuoc/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}
+POST/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc
 
-PUT/donthuoc/{id}/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}
+PUT/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc/{id}
 
-DELETE/donthuoc/dangkykham/{dangkykhamid}
+DELETE/donthuoc/{id}
+
+DELETE/dangkykham/{dangkykhamid}/donthuoc
