@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.model.Tinh;
@@ -26,16 +27,18 @@ public class TinhController {
 	private ITinhService service;
 	
 	@GetMapping("/tinh")
+	@ResponseBody
 	public List<Tinh> getAllTinh(){
 		return service.getAll(); 
 	}
 	
 	@GetMapping("/tinh/{id}")
+	@ResponseBody
 	public Tinh getTinhById( @PathVariable("id") Long id ) {
 		return service.getOneById(id);
 	}
 	
-	@PostMapping("/tinh")
+	@PostMapping("/tinh")	
 	public Tinh createTinh( @Valid @RequestBody Tinh tinh) {
 		return service.save(tinh);
 	}

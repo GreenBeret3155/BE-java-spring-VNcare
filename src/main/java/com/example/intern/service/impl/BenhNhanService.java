@@ -38,7 +38,10 @@ public class BenhNhanService implements IBenhNhanService {
 	}
 	
 	@Override
-	public BenhNhan save(BenhNhan benhnhan) {
+	public BenhNhan save(BenhNhan benhnhan) throws DuplicateIdException{
+		if(benhnhan.getId() == null) return benhnhanRepository.save(benhnhan);
+		BenhNhan benhnhan2 = benhnhanRepository.getOne(benhnhan.getId());
+		if(benhnhan2 != null) throw new DuplicateIdException("BenhNhan", benhnhan.getId());
 		return benhnhanRepository.save(benhnhan);
 	}
 	

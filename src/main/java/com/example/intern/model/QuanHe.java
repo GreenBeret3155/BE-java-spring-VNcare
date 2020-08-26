@@ -1,5 +1,6 @@
 package com.example.intern.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -36,7 +36,7 @@ public class QuanHe {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private BenhNhan benhnhanphu;
 	
-	@NotNull
+	@Column(columnDefinition = "integer default 0")
 	private int loaiquanhe;
 	
 	
@@ -44,11 +44,15 @@ public class QuanHe {
 	public QuanHe() {
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public QuanHe(Long id, BenhNhan benhnhanchinh, BenhNhan benhnhanphu, int loaiquanhe) {
+	
+	public QuanHe(BenhNhan benhnhanchinh, BenhNhan benhnhanphu) {
 		super();
-		this.id = id;
+		this.benhnhanchinh = benhnhanchinh;
+		this.benhnhanphu = benhnhanphu;
+	}
+
+	public QuanHe(BenhNhan benhnhanchinh, BenhNhan benhnhanphu, int loaiquanhe) {
+		super();
 		this.benhnhanchinh = benhnhanchinh;
 		this.benhnhanphu = benhnhanphu;
 		this.loaiquanhe = loaiquanhe;

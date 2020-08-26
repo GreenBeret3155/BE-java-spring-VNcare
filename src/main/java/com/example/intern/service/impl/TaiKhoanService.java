@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.TaiKhoan;
 import com.example.intern.repository.TaiKhoanRepository;
@@ -32,6 +33,9 @@ public class TaiKhoanService implements ITaiKhoanService {
 	
 	@Override
 	public TaiKhoan save(TaiKhoan taikhoan) {
+		if(taikhoan.getId() == null) return taikhoanRepository.save(taikhoan);
+		TaiKhoan taikhoan2 = taikhoanRepository.getOne(taikhoan.getId());
+		if(taikhoan2 != null) throw new DuplicateIdException("TaiKhoan", taikhoan.getId());
 		return taikhoanRepository.save(taikhoan);
 	}
 	

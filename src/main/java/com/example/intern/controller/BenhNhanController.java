@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.model.BenhNhan;
+import com.example.intern.model.QuanHe;
 import com.example.intern.model.TaiKhoan;
 import com.example.intern.service.IBenhNhanService;
+import com.example.intern.service.IQuanHeService;
 import com.example.intern.service.ITaiKhoanService;
 
 @RestController
@@ -29,6 +31,9 @@ public class BenhNhanController {
 	
 	@Autowired
 	private ITaiKhoanService taikhoanService;
+	
+	@Autowired
+	private IQuanHeService quanheService;
 	
 	@GetMapping("/benhnhan")
 	public List<BenhNhan> getAll(){
@@ -49,38 +54,25 @@ public class BenhNhanController {
 	public BenhNhan createBenhNhan(@PathVariable("taikhoanid") Long taikhoanid, 
 			@Valid @RequestBody BenhNhan benhnhanRequest) {
 		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
+		BenhNhan benhnhan = benhnhanService.save(benhnhanRequest);
+		QuanHe quanhe = new QuanHe( benhnhan, benhnhan );
+		quanheService.save(quanhe);
 		benhnhanRequest.setTaikhoan(taikhoan);
 		
-		return benhnhanService.save(benhnhanRequest);
+		return benhnhan;
 	}
 	
 	@PostMapping("/benhnhan")
-	public BenhNhan createBenhNhanWithoutTaikhoanId(@Valid @RequestBody BenhNhan benhnhan) {
-		return benhnhanService.save(benhnhan);
+	public BenhNhan createBenhNhanWithoutTaikhoanId(@Valid @RequestBody BenhNhan benhnhanRequest) {
+		BenhNhan benhnhan = benhnhanService.save(benhnhanRequest);
+		QuanHe quanhe = new QuanHe( benhnhan, benhnhan ); 
+		quanheService.save(quanhe);
+		return benhnhan;
 	}
 	
-//	@PutMapping("/taikhoan/{taikhoanid}/benhnhan/{id}")
-//	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
-//			@PathVariable("taikhoanid") Long taikhoanid,
-//			@Valid @RequestBody BenhNhan benhnhanRequest) {
-//		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
-//		BenhNhan benhnhan = benhnhanService.getOneById(id);
-//		
-//		benhnhan.setTen(benhnhanRequest.getTen());
-//		benhnhan.setNgaysinh(benhnhanRequest.getNgaysinh());
-//		benhnhan.setGioitinh(benhnhanRequest.getGioitinh());
-//		benhnhan.setCmnd(benhnhanRequest.getCmnd());
-//		benhnhan.setNgaycap(benhnhanRequest.getNgaycap());
-//		benhnhan.setNoicap(benhnhanRequest.getNoicap());
-//		benhnhan.setBhyt(benhnhanRequest.getBhyt());
-//		benhnhan.setDiachi(benhnhanRequest.getDiachi());
-//		benhnhan.setTaikhoan(taikhoan);
-//		
-//		return benhnhanService.save(benhnhan);
-//	}
 	
 	@PutMapping("/benhnhan/{id}")
-	public BenhNhan updateBenhNhanWithoutTaikhoanId(@PathVariable("id")Long id,
+	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
 			@Valid @RequestBody BenhNhan benhnhanRequest) {
 		BenhNhan benhnhan = benhnhanService.getOneById(id);
 		

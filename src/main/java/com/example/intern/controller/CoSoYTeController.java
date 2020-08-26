@@ -45,11 +45,8 @@ public class CoSoYTeController {
 		return cosoyteService.findByTinhId(tinhid);
 	}
 	
-	@PostMapping("/tinh/{tinhid}/cosoyte")
-	public CoSoYTe createCoSoYTe(@PathVariable("tinhid") Long tinhid,
-			@Valid @RequestBody CoSoYTe cosoyteRequest) {
-		Tinh tinh = tinhService.getOneById(tinhid);
-		cosoyteRequest.setTinh(tinh);
+	@PostMapping("/cosoyte/create")
+	public CoSoYTe createCoSoYTe(@Valid @RequestBody CoSoYTe cosoyteRequest) {
 		return cosoyteService.save(cosoyteRequest);
 	}
 	

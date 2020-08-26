@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.DangKyKham;
 import com.example.intern.repository.DangKyKhamRepository;
@@ -53,6 +54,9 @@ public class DangKyKhamService implements IDangKyKhamService {
 	
 	@Override
 	public DangKyKham save(DangKyKham dangkykham) {
+		if(dangkykham.getId() == null) return dangkykhamRepository.save(dangkykham);
+		DangKyKham dangkykham2 = dangkykhamRepository.getOne(dangkykham.getId());
+		if(dangkykham2 != null) throw new DuplicateIdException("DangKyKham", dangkykham.getId());
 		return dangkykhamRepository.save(dangkykham);
 	}
 	

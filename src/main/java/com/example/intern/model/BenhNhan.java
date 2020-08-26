@@ -1,4 +1,4 @@
-package com.example.intern.model;
+	package com.example.intern.model;
 
 import java.sql.Date;
 
@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,7 +28,7 @@ public class BenhNhan {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 50)
 	private String ten ;
 	
@@ -37,7 +36,7 @@ public class BenhNhan {
 	@NotNull
 	private Date ngaysinh;
 	
-	@NotBlank
+	@NotNull
 	private Boolean gioitinh;
 	
 	@Size(max = 20)
@@ -51,7 +50,7 @@ public class BenhNhan {
 	@Size(max = 20)
 	private String bhyt;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 500)
 	private String diachi;
 	
