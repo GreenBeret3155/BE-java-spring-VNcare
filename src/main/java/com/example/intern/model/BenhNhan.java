@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -57,7 +56,6 @@ public class BenhNhan {
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "taikhoanid", nullable = true )
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
 	private TaiKhoan taikhoan;
 	
 	

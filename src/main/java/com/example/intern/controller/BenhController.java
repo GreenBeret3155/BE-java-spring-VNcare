@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.Benh;
 import com.example.intern.service.IBenhService;
 
@@ -30,17 +31,21 @@ public class BenhController {
 		return benhService.getAll();
 	}
 	
-	@GetMapping("/benh/{id}")
+	@GetMapping("/benh/details/{id}")
 	public Benh getOneById(@PathVariable("id") Long id) {
 		return benhService.getOneById(id);
 	}
 	
-	@PostMapping("/benh")
-	public Benh createBenh(@Valid @RequestBody Benh benhRequest) {
-		return benhService.save(benhRequest);
+	@PostMapping("/benh/create")
+	public Benh createBenh(@Valid @RequestBody Benh benh) {
+		if(benh.getId() == null) return benhService.save(benh);
+		Benh benh2 = benhService.getOneById(benh.getId());
+		if(benh2 != null) throw new DuplicateIdException("Benh", benh.getId());
+		
+		return benhService.save(benh);
 	}
 	
-	@PutMapping("/benh/{id}")
+	@PutMapping("/benh/update/{id}")
 	public Benh updateBenh (@PathVariable("id")Long id,
 			@Valid @RequestBody Benh benhRequest) {
 		Benh benh = benhService.getOneById(id);
@@ -51,7 +56,7 @@ public class BenhController {
 		return benhService.save(benh);
 	}
 	
-	@DeleteMapping("/benh/{id}")
+	@DeleteMapping("/benh/delete/{id}")
 	public ResponseEntity<?> deleteBenh(@PathVariable("id")Long id) {
 		benhService.delete(id);
 		return ResponseEntity.ok().build();

@@ -5,7 +5,7 @@ import com.example.intern.model.CoSoYTe;
 
 public interface ICoSoYTeService {
 	
-	List<CoSoYTe> getAll();
+	List<CoSoYTe>queryByTenAndTinh(String ten, Long tinhid);
 	CoSoYTe getOneById(Long id);
 	List<CoSoYTe> findByTinhId(Long tinhid);
 	CoSoYTe save(CoSoYTe cosoyte);

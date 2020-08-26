@@ -76,6 +76,7 @@ public class BacSiController {
 		bacsi.setChuyenkhoa(bacsiRequest.getChuyenkhoa());
 		bacsi.setTrinhdo(bacsiRequest.getTrinhdo());
 		bacsi.setMota(bacsiRequest.getMota());
+		bacsi.setKhoa(bacsiRequest.getKhoa());
 		
 		return bacsiService.save(bacsi);
 	}

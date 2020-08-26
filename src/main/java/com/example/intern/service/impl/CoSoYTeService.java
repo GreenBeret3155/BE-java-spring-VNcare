@@ -16,11 +16,23 @@ public class CoSoYTeService implements ICoSoYTeService {
 	@Autowired
 	public CoSoYTeRepository cosoyteRepository;
 	
+	
 	@Override
-	public List<CoSoYTe> getAll() throws ResourceNotFoundException{
-		List<CoSoYTe> cosoyte = cosoyteRepository.findAll();
-		if(cosoyte == null ) throw new ResourceNotFoundException("CoSoYTe");
-		return cosoyte; 
+	public List<CoSoYTe> queryByTenAndTinh(String ten,Long tinhid) throws ResourceNotFoundException{
+		if(ten == null && tinhid == null) return cosoyteRepository.findAll();
+		if(tinhid == null ) {
+			List<CoSoYTe> cosoyte = cosoyteRepository.findByTen(ten);
+			if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+			return cosoyte;
+		}
+		if(ten == null) {
+			List<CoSoYTe> cosoyte = cosoyteRepository.findByTinhId(tinhid);
+			if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+			return cosoyte;
+		}
+		List<CoSoYTe> cosoyte = cosoyteRepository.findByTenAndTinhId(ten,tinhid);
+		if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+		return cosoyte;
 	}
 	
 	@Override

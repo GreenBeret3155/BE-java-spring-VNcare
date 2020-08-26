@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.DonThuoc;
 import com.example.intern.repository.DonThuocRepository;
@@ -42,9 +41,6 @@ public class DonThuocService implements IDonThuocService  {
 	
 	@Override
 	public DonThuoc save(DonThuoc donthuoc) {
-		if(donthuoc.getId() == null) return donthuocRepository.save(donthuoc);
-		DonThuoc donthuoc2 = donthuocRepository.getOne(donthuoc.getId());
-		if(donthuoc2 != null) throw new DuplicateIdException("DonThuoc", donthuoc.getId());
 		return donthuocRepository.save(donthuoc);
 	}
 	

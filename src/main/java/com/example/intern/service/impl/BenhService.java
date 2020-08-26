@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.Benh;
 import com.example.intern.repository.BenhRepository;
@@ -33,9 +32,6 @@ public class BenhService implements IBenhService {
 	
 	@Override
 	public Benh save(Benh benh) {
-		if(benh.getId() == null) return benhRepository.save(benh);
-		Benh benh2 = benhRepository.getOne(benh.getId());
-		if(benh2 != null) throw new DuplicateIdException("Benh", benh.getId());
 		return benhRepository.save(benh);
 	}
 	
