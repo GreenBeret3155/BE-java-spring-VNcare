@@ -5,9 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,14 +19,14 @@ public class Benh {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 100)
 	private String ten;
 	
 	@Size(max = 20)
 	private String mabenh;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 500)
 	private String mota;
 	

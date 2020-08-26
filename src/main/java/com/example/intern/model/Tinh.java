@@ -3,9 +3,8 @@ package com.example.intern.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,7 +16,7 @@ public class Tinh {
 	@Id
 	private Long id;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 30)
 	private String ten;
 	

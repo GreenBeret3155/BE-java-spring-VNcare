@@ -5,9 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,15 +19,15 @@ public class TaiKhoan {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 50)
 	private String email;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 20)
 	private String password;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 20)
 	private String sdt;
 	

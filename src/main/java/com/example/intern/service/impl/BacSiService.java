@@ -46,6 +46,9 @@ public class BacSiService implements IBacSiService {
 	
 	@Override
 	public BacSi save(BacSi bacsi) {
+		if(bacsi.getId() == null) return bacsiRepository.save(bacsi);
+		BacSi bacsi2 = bacsiRepository.getOne(bacsi.getId());
+		if(bacsi2 != null) throw new DuplicateIdException("BacSi", bacsi.getId());
 		return bacsiRepository.save(bacsi);
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.DonViTinh;
 import com.example.intern.repository.DonViTinhRepository;
@@ -32,6 +33,9 @@ public class DonViTinhService implements IDonViTinhService {
 	
 	@Override
 	public DonViTinh save(DonViTinh donvitinh) {
+		if(donvitinh.getId() == null) return donvitinhRepository.save(donvitinh);
+		DonViTinh donvitinh2 = donvitinhRepository.getOne(donvitinh.getId());
+		if(donvitinh2 != null) throw new DuplicateIdException("BenhNhan", donvitinh.getId());
 		return donvitinhRepository.save(donvitinh);
 	}
 	

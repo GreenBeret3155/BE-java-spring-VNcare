@@ -9,11 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,11 +27,11 @@ public class BacSi {
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	private Long id;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 50)
 	private String ten;
 	
-	@NotBlank
+	@NotNull
 	@Size(max = 50)
 	private String chuyenkhoa;
 	
