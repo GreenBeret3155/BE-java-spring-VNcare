@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.Thuoc;
 import com.example.intern.service.IThuocService;
 
@@ -30,17 +31,21 @@ public class ThuocController {
 		return thuocService.getAll();
 	}
 	
-	@GetMapping("/thuoc/{id}")
+	@GetMapping("/thuoc/details/{id}")
 	public Thuoc getOneById(@PathVariable("id") Long id) {
 		return thuocService.getOneById(id);
 	}
 	
-	@PostMapping("/thuoc")
-	public Thuoc createThuoc (@Valid @RequestBody Thuoc thuocRequest) {
-		return thuocService.save(thuocRequest);
+	@PostMapping("/thuoc/create")
+	public Thuoc createThuoc (@Valid @RequestBody Thuoc thuoc) {
+		if(thuoc.getId() == null) return thuocService.save(thuoc);
+		Thuoc thuoc2 = thuocService.getOneById(thuoc.getId());
+		if(thuoc2 != null) throw new DuplicateIdException("Thuoc", thuoc.getId());
+		
+		return thuocService.save(thuoc);
 	}
 	
-	@PutMapping("/thuoc/{id}")
+	@PutMapping("/thuoc/update/{id}")
 	public Thuoc updateThuoc ( @PathVariable("id") Long id,
 			@Valid @RequestBody Thuoc thuocRequest) {
 		Thuoc thuoc = thuocService.getOneById(id);
@@ -50,7 +55,7 @@ public class ThuocController {
 		return thuocService.save(thuoc);
 	}
 	
-	@DeleteMapping("/thuoc/{id}")
+	@DeleteMapping("/thuoc/delete/{id}")
 	public ResponseEntity<?> deleteThuoc(@PathVariable("id")Long id) {
 		thuocService.delete(id);
 		return ResponseEntity.ok().build();

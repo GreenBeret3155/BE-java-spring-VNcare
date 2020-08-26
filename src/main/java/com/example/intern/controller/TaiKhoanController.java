@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.TaiKhoan;
 import com.example.intern.service.ITaiKhoanService;
 
@@ -30,17 +31,21 @@ public class TaiKhoanController {
 		return taikhoanService.getAll();
 	}
 	
-	@GetMapping("/taikhoan/{id}")
+	@GetMapping("/taikhoan/details/{id}")
 	public TaiKhoan getOneById(@PathVariable("id")Long id) {
 		return taikhoanService.getOneById(id);
 	}
 	
-	@PostMapping("/taikhoan")
-	public TaiKhoan createTaiKhoan(@Valid @RequestBody TaiKhoan taikhoanRequest ) {
-		return taikhoanService.save(taikhoanRequest);
+	@PostMapping("/taikhoan/create")
+	public TaiKhoan createTaiKhoan(@Valid @RequestBody TaiKhoan taikhoan ) {
+		if(taikhoan.getId() == null) return taikhoanService.save(taikhoan);
+		TaiKhoan taikhoan2 = taikhoanService.getOneById(taikhoan.getId());
+		if(taikhoan2 != null) throw new DuplicateIdException("TaiKhoan", taikhoan.getId());
+		
+		return taikhoanService.save(taikhoan);
 	}
 	
-	@PutMapping("/taikhoan/{id}")
+	@PutMapping("/taikhoan/update/{id}")
 	public TaiKhoan updateTaiKhoan (@PathVariable("id")Long id,
 			@Valid @RequestBody TaiKhoan taikhoanRequest) {
 		TaiKhoan taikhoan = taikhoanService.getOneById(id);
@@ -52,7 +57,7 @@ public class TaiKhoanController {
 		return taikhoanService.save(taikhoan);
 	}
 	
-	@DeleteMapping("/taikhoan/{id}")
+	@DeleteMapping("/taikhoan/delete/{id}")
 	public ResponseEntity<?> deleteTaiKhoan(@PathVariable("id") Long id) {
 		taikhoanService.delete(id);
 		return ResponseEntity.ok().build();

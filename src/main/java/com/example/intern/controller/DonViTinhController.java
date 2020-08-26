@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.DonViTinh;
 import com.example.intern.service.IDonViTinhService;
 
@@ -30,17 +31,21 @@ public class DonViTinhController {
 		return donvitinhService.getAll();
 	}
 	
-	@GetMapping("/donvitinh/{id}")
+	@GetMapping("/donvitinh/details/{id}")
 	public DonViTinh getOneById(@PathVariable("id") Long id) {
 		return donvitinhService.getOneById(id);
 	}
 	
-	@PostMapping("/donvitinh")
-	public DonViTinh createDonViTinh(@Valid @RequestBody DonViTinh donvitinhRequest) {
-		return donvitinhService.save(donvitinhRequest);
+	@PostMapping("/donvitinh/create")
+	public DonViTinh createDonViTinh(@Valid @RequestBody DonViTinh donvitinh) {
+		if(donvitinh.getId() == null) return donvitinhService.save(donvitinh);
+		DonViTinh donvitinh2 = donvitinhService.getOneById(donvitinh.getId());
+		if(donvitinh2 != null) throw new DuplicateIdException("BenhNhan", donvitinh.getId());
+		
+		return donvitinhService.save(donvitinh);
 	}
 	
-	@PutMapping("/donvitinh/{id}")
+	@PutMapping("/donvitinh/update/{id}")
 	public DonViTinh updateDonViTinh(@PathVariable("id")Long id,
 			@Valid @RequestBody DonViTinh donvitinhRequest) {
 		DonViTinh donvitinh = donvitinhService.getOneById(id);
@@ -50,7 +55,7 @@ public class DonViTinhController {
 		return donvitinhService.save(donvitinh);
 	}
 	
-	@DeleteMapping("/donvitinh/{id}")
+	@DeleteMapping("/donvitinh/delete/{id}")
 	public ResponseEntity<?> deleteDonViTinh(@PathVariable("id") Long id) {
 		donvitinhService.delete(id);
 		return ResponseEntity.ok().build();

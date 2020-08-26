@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
-import com.example.intern.model.TaiKhoan;
 import com.example.intern.service.IBenhNhanService;
 import com.example.intern.service.IQuanHeService;
-import com.example.intern.service.ITaiKhoanService;
 
 @RestController
 @RequestMapping("/api")
@@ -30,9 +29,6 @@ public class BenhNhanController {
 	private IBenhNhanService benhnhanService;
 	
 	@Autowired
-	private ITaiKhoanService taikhoanService;
-	
-	@Autowired
 	private IQuanHeService quanheService;
 	
 	@GetMapping("/benhnhan")
@@ -40,7 +36,7 @@ public class BenhNhanController {
 		return benhnhanService.getAll();
 	}
 	
-	@GetMapping("/benhnhan/{id}")
+	@GetMapping("/benhnhan/details/{id}")
 	public BenhNhan getOneById(@PathVariable("id") Long id) {
 		return benhnhanService.getOneById(id);
 	}
@@ -50,28 +46,20 @@ public class BenhNhanController {
 		return benhnhanService.findByTaikhoanId(taikhoanid);
 	}
 	
-	@PostMapping("/taikhoan/{taikhoanid}/benhnhan")
-	public BenhNhan createBenhNhan(@PathVariable("taikhoanid") Long taikhoanid, 
-			@Valid @RequestBody BenhNhan benhnhanRequest) {
-		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
-		BenhNhan benhnhan = benhnhanService.save(benhnhanRequest);
-		QuanHe quanhe = new QuanHe( benhnhan, benhnhan );
-		quanheService.save(quanhe);
-		benhnhanRequest.setTaikhoan(taikhoan);
-		
-		return benhnhan;
-	}
 	
-	@PostMapping("/benhnhan")
-	public BenhNhan createBenhNhanWithoutTaikhoanId(@Valid @RequestBody BenhNhan benhnhanRequest) {
-		BenhNhan benhnhan = benhnhanService.save(benhnhanRequest);
+	@PostMapping("/benhnhan/create")
+	public BenhNhan createBenhNhan(@Valid @RequestBody BenhNhan benhnhan) {
+		if(benhnhan.getId() == null) return benhnhanService.save(benhnhan);
+		BenhNhan benhnhan2 = benhnhanService.getOneById(benhnhan.getId());
+		if(benhnhan2 != null) throw new DuplicateIdException("BenhNhan", benhnhan.getId());
 		QuanHe quanhe = new QuanHe( benhnhan, benhnhan ); 
 		quanheService.save(quanhe);
-		return benhnhan;
+		
+		return benhnhanService.save(benhnhan);
 	}
 	
 	
-	@PutMapping("/benhnhan/{id}")
+	@PutMapping("/benhnhan/update/{id}")
 	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
 			@Valid @RequestBody BenhNhan benhnhanRequest) {
 		BenhNhan benhnhan = benhnhanService.getOneById(id);
@@ -88,7 +76,7 @@ public class BenhNhanController {
 		return benhnhanService.save(benhnhan);
 	}
 	
-	@DeleteMapping("/benhnhan/{id}")
+	@DeleteMapping("/benhnhan/delete/{id}")
 	public ResponseEntity<?> deleteBenhNhan(@PathVariable("id") Long id) {
 		benhnhanService.delete(id);
 		return ResponseEntity.ok().build();

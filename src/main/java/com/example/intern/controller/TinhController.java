@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.Tinh;
 import com.example.intern.service.ITinhService; 
   
@@ -26,34 +27,34 @@ public class TinhController {
 	@Autowired
 	private ITinhService service;
 	
-	@GetMapping("/tinh")
-	@ResponseBody
-	public List<Tinh> getAllTinh(){
-		return service.getAll(); 
+	@GetMapping("/tinh/search")
+	public List<Tinh> queryTinh(@RequestParam(name = "ten", required = false )String ten){
+		return service.queryByTen(ten);
 	}
 	
-	@GetMapping("/tinh/{id}")
-	@ResponseBody
+	@GetMapping("/tinh/details/{id}")
 	public Tinh getTinhById( @PathVariable("id") Long id ) {
 		return service.getOneById(id);
 	}
 	
-	@PostMapping("/tinh")	
+	@PostMapping("/tinh/create")	
 	public Tinh createTinh( @Valid @RequestBody Tinh tinh) {
+		if(tinh.getId() == null) return service.save(tinh);
+		Tinh tinh2 = service.getOneById(tinh.getId());
+		if(tinh2 != null) throw new DuplicateIdException("Tinh", tinh.getId());
 		return service.save(tinh);
 	}
 	
-	@PutMapping("/tinh/{id}")
+	@PutMapping("/tinh/update/{id}")
 	public Tinh updateTinh(@PathVariable("id") Long id,  
-			@Valid @RequestBody Tinh tinh) {
-		Tinh tinhmodel = service.getOneById(id);
+			@Valid @RequestBody Tinh tinhRequest) {
+		Tinh tinh = service.getOneById(id);
+		tinh.setTen(tinhRequest.getTen());
 		
-		tinhmodel.setTen(tinh.getTen());
-		
-		return service.save(tinhmodel);
+		return service.save(tinh);
 	}
 	
-	@DeleteMapping("/tinh/{id}")
+	@DeleteMapping("/tinh/delete/{id}")
 	public ResponseEntity<?> deleteTinh(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();

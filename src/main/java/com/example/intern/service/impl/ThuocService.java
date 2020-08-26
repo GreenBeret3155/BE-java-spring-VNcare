@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.Thuoc;
 import com.example.intern.repository.ThuocRepository;
@@ -33,9 +32,6 @@ public class ThuocService implements IThuocService {
 	
 	@Override
 	public Thuoc save(Thuoc thuoc) {
-		if(thuoc.getId() == null) return thuocRepository.save(thuoc);
-		Thuoc thuoc2 = thuocRepository.getOne(thuoc.getId());
-		if(thuoc2 != null) throw new DuplicateIdException("Thuoc", thuoc.getId());
 		return thuocRepository.save(thuoc);
 	}
 	

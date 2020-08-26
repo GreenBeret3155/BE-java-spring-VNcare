@@ -15,14 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.intern.model.DangKyKham;
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.DonThuoc;
-import com.example.intern.model.DonViTinh;
-import com.example.intern.model.Thuoc;
-import com.example.intern.service.IDangKyKhamService;
 import com.example.intern.service.IDonThuocService;
-import com.example.intern.service.IDonViTinhService;
-import com.example.intern.service.IThuocService;
 
 @RestController
 @RequestMapping("/api")
@@ -31,21 +26,12 @@ public class DonThuocController {
 	@Autowired
 	private IDonThuocService donthuocService;
 	
-	@Autowired
-	private IDangKyKhamService dangkykhamService;
-	
-	@Autowired
-	private IThuocService thuocService;
-	
-	@Autowired
-	private IDonViTinhService donvitinhService;
-	
 	@GetMapping("/donthuoc")
 	public List<DonThuoc> getAll(){
 		return donthuocService.getAll();
 	}
 	
-	@GetMapping("/donthuoc/{id}")
+	@GetMapping("/donthuoc/details/{id}")
 	public DonThuoc getOneById(@PathVariable("id")Long id) {
 		return donthuocService.getOneById(id);
 	}
@@ -55,51 +41,39 @@ public class DonThuocController {
 		return donthuocService.findByDangKyKhamId(dangkykhamid);
 	}
 	
-	@PostMapping("/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc")
-	public DonThuoc createDonThuoc (@PathVariable("dangkykhamid")Long dangkykhamid,
-			@PathVariable("thuocid")Long thuocid,
-			@PathVariable("donvitinhid")Long donvitinhid,
-			@Valid @RequestBody DonThuoc donthuocRequest) {
-		DangKyKham dangkykham = dangkykhamService.getOneById(dangkykhamid);
-		Thuoc thuoc = thuocService.getOneById(thuocid);
-		DonViTinh donvitinh = donvitinhService.getOneById(donvitinhid);
-		donthuocRequest.setDangkykham(dangkykham);
-		donthuocRequest.setDonvitinh(donvitinh);
-		donthuocRequest.setThuoc(thuoc);
+	@PostMapping("/donthuoc/create")
+	public DonThuoc createDonThuoc (@Valid @RequestBody DonThuoc donthuoc) {
+		if(donthuoc.getId() == null) return donthuocService.save(donthuoc);
+		DonThuoc donthuoc2 = donthuocService.getOneById(donthuoc.getId());
+		if(donthuoc2 != null) throw new DuplicateIdException("DonThuoc", donthuoc.getId());
 		
-		return donthuocService.save(donthuocRequest);
+		return donthuocService.save(donthuoc);
 	}
 	
-	@PutMapping("/dangkykham/{dangkykhamid}/thuoc/{thuocid}/donvitinh/{donvitinhid}/donthuoc/{id}")
+	@PutMapping("/donthuoc/update/{id}")
 	public DonThuoc updateDonThuoc (@PathVariable("id")Long id,
-			@PathVariable("dangkykhamid")Long dangkykhamid,
-			@PathVariable("thuocid")Long thuocid,
-			@PathVariable("donvitinhid")Long donvitinhid,
 			@Valid @RequestBody DonThuoc donthuocRequest) {
-		DangKyKham dangkykham = dangkykhamService.getOneById(dangkykhamid);
-		Thuoc thuoc = thuocService.getOneById(thuocid);
-		DonViTinh donvitinh = donvitinhService.getOneById(donvitinhid);
 		DonThuoc donthuoc = donthuocService.getOneById(id);
 		donthuoc.setSoluong(donthuocRequest.getSoluong());
 		donthuoc.setHuongdan(donthuocRequest.getHuongdan());
-		donthuoc.setDangkykham(dangkykham);
-		donthuoc.setDonvitinh(donvitinh);
-		donthuoc.setThuoc(thuoc);
+		donthuoc.setDangkykham(donthuocRequest.getDangkykham());
+		donthuoc.setDonvitinh(donthuocRequest.getDonvitinh());
+		donthuoc.setThuoc(donthuocRequest.getThuoc());
 		
 		return donthuocService.save(donthuocRequest);
 	}
 	
-	@DeleteMapping("/donthuoc/{id}")
+	@DeleteMapping("/donthuoc/delete/{id}")
 	public ResponseEntity<?> deleteDonThuoc(@PathVariable("id")Long id) {
 		donthuocService.deleteByDangkykhamId(id);
 		return ResponseEntity.ok().build();
 	}
 	
 	
-	@DeleteMapping("/dangkykham/{dangkykhamid}/donthuoc")
-	public ResponseEntity<?> deleteDonThuocByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid) {
-		donthuocService.deleteByDangkykhamId(dangkykhamid);
-		return ResponseEntity.ok().build();
-	}
+//	@DeleteMapping("/dangkykham/{dangkykhamid}/donthuoc")
+//	public ResponseEntity<?> deleteDonThuocByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid) {
+//		donthuocService.deleteByDangkykhamId(dangkykhamid);
+//		return ResponseEntity.ok().build();
+//	}
 	
 }

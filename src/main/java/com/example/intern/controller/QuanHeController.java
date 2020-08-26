@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.service.IBenhNhanService;
 import com.example.intern.service.IQuanHeService;
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
 
@@ -39,34 +40,29 @@ public class QuanHeController {
 	public List<QuanHe> findByBenhnhanchinhId(@PathVariable("benhnhanchinhid")Long benhnhanchinhid){
 		return quanheService.findByBenhnhanchinhId(benhnhanchinhid);
 	}
+	// findby benhnhanchinhid, benhnhanphuid
 	
-	@PostMapping("/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe")
-	public QuanHe createQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
-			@PathVariable("benhnhanphuid")Long benhnhanphuid,
-			@Valid @RequestBody QuanHe quanheRequest) {
-		BenhNhan benhnhanchinh = benhnhanService.getOneById(benhnhanchinhid);
-		BenhNhan benhnhanphu = benhnhanService.getOneById(benhnhanphuid);
-		quanheRequest.setBenhnhanchinh(benhnhanchinh);
-		quanheRequest.setBenhnhanphu(benhnhanphu);
+	@PostMapping("/quanhe/create")
+	public QuanHe createQuanHe(@Valid @RequestBody QuanHe quanheRequest) {
+		if(quanheRequest.getId() == null) return quanheService.save(quanheRequest);
+		QuanHe quanhe2 = quanheService.getOneById(quanheRequest.getId());
+		if(quanhe2 != null) throw new DuplicateIdException("QuanHe", quanheRequest.getId());
 		
 		return quanheService.save(quanheRequest);
 	}
 	
-	@PutMapping("/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe")
-	public QuanHe updateQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
-			@PathVariable("benhnhanphuid")Long benhnhanphuid,
+	@PutMapping("/quanhe/update/{id}")
+	public QuanHe updateQuanHe(@PathVariable("id")Long id,
 			@Valid @RequestBody QuanHe quanheRequest) {
-		BenhNhan benhnhanchinh = benhnhanService.getOneById(benhnhanchinhid);
-		BenhNhan benhnhanphu = benhnhanService.getOneById(benhnhanphuid);
-		QuanHe quanhe = quanheService.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid, benhnhanphuid);
+		QuanHe quanhe = quanheService.getOneById(id);
 		quanhe.setLoaiquanhe(quanheRequest.getLoaiquanhe());
-		quanhe.setBenhnhanchinh(benhnhanchinh);
-		quanhe.setBenhnhanphu(benhnhanphu);
+		quanhe.setBenhnhanchinh(quanheRequest.getBenhnhanchinh());
+		quanhe.setBenhnhanphu(quanheRequest.getBenhnhanphu());
 		
 		return quanheService.save(quanhe);
 	}
 	
-	@DeleteMapping("/benhnhan/{benhnhanchinhid}/{benhnhanphuid}/quanhe")
+	@DeleteMapping("/quanhe/{benhnhanchinhid}/{benhnhanphuid}")
 	public ResponseEntity<?> deleteQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
 			@PathVariable("benhnhanphuid")Long benhnhanphuid) {
 		BenhNhan benhnhanchinh = benhnhanService.getOneById(benhnhanchinhid);

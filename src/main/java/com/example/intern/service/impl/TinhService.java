@@ -24,6 +24,14 @@ public class TinhService implements ITinhService {
 	}
 	
 	@Override
+	public List<Tinh> queryByTen(String ten){
+		if(ten == null) return tinhRepository.findAll();
+		List<Tinh> tinh = tinhRepository.findByTen(ten);
+		if( tinh == null ) throw new ResourceNotFoundException("Tinh");
+		return tinh;
+	}
+	
+	@Override
 	public Tinh getOneById(Long id) throws ResourceNotFoundException{
 		Tinh tinh = tinhRepository.findOne(id);
 		if( tinh == null ) throw new ResourceNotFoundException("Tinh", "id", id);

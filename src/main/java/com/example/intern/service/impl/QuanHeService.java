@@ -25,6 +25,13 @@ public class QuanHeService implements IQuanHeService {
 		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe");
 		return quanhe;
 	}
+	
+	@Override
+	public QuanHe getOneById(Long id) throws ResourceNotFoundException{
+		QuanHe quanhe = quanheRepository.findOne(id);
+		if(quanhe == null) throw new ResourceNotFoundException("QuanHe","id", id);
+		return quanhe;
+	}
 		
 	@Override 
 	public 	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid) throws ResourceNotFoundException{
@@ -34,7 +41,7 @@ public class QuanHeService implements IQuanHeService {
 	}
 	
 	@Override
-	public QuanHe findByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) throws ResourceNotFoundException{
+	public QuanHe getOneByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) throws ResourceNotFoundException{
 		QuanHe quanhe = quanheRepository.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid, benhnhanphuid);
 		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanphuid", benhnhanphuid);
 		return quanhe;

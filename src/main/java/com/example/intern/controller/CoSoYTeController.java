@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.CoSoYTe;
-import com.example.intern.model.Tinh;
 import com.example.intern.service.ICoSoYTeService;
-import com.example.intern.service.ITinhService;
 
 @RestController
 @RequestMapping("/api")
@@ -27,15 +27,14 @@ public class CoSoYTeController {
 	@Autowired
 	public ICoSoYTeService cosoyteService;
 	
-	@Autowired
-	public ITinhService tinhService;
 	
-	@GetMapping("/cosoyte")
-	public List<CoSoYTe> getAll(){
-		return cosoyteService.getAll();
+	@GetMapping("/search")
+	public List<CoSoYTe> getAll(@RequestParam(name = "ten", required = false)String ten,
+			@RequestParam(name = "tinhid", required = false)Long  tinhid){
+		return cosoyteService.queryByTenAndTinh(ten, tinhid);
 	}
 	
-	@GetMapping("/cosoyte/{id}")
+	@GetMapping("/cosoyte/details/{id}")
 	public CoSoYTe getOneById(@PathVariable("id") Long id  ) {
 		return cosoyteService.getOneById(id);
 	}
@@ -46,32 +45,26 @@ public class CoSoYTeController {
 	}
 	
 	@PostMapping("/cosoyte/create")
-	public CoSoYTe createCoSoYTe(@Valid @RequestBody CoSoYTe cosoyteRequest) {
-		return cosoyteService.save(cosoyteRequest);
+	public CoSoYTe createCoSoYTe(@Valid @RequestBody CoSoYTe cosoyte) {
+		if(cosoyte.getId() == null) return cosoyteService.save(cosoyte);
+		CoSoYTe cosoyte2 = cosoyteService.getOneById(cosoyte.getId());
+		if(cosoyte2 != null) throw new DuplicateIdException("CoSoYTe", cosoyte.getId());
+		
+		return cosoyteService.save(cosoyte);
 	}
 	
-	@PutMapping("/cosoyte/{cosoyteid}")
-	public CoSoYTe updateCoSoYTe(@PathVariable("cosoyteid") Long csid,
-			@Valid @RequestBody CoSoYTe cosoyteRequest ) {
-		CoSoYTe cs = cosoyteService.getOneById(csid);
-		cs.setTen(cosoyteRequest.getTen());
+	
+	@PutMapping("/cosoyte/update/{id}")
+	public CoSoYTe updateCoSoYTeByTinhId(@PathVariable("id") Long id,
+			@Valid @RequestBody CoSoYTe cosoyte ) {
+		CoSoYTe cs = cosoyteService.getOneById(id);
+		cs.setTen(cosoyte.getTen());
+		cs.setTinh(cosoyte.getTinh());
 		
 		return cosoyteService.save(cs);
 	}
 	
-	@PutMapping("/tinh/{tinhid}/cosoyte/{cosoyteid}")
-	public CoSoYTe updateCoSoYTeByTinhId(@PathVariable("cosoyteid") Long csid,
-			@PathVariable("tinhid") Long tinhid,
-			@Valid @RequestBody CoSoYTe cosoyteRequest ) {
-		Tinh tinh = tinhService.getOneById(tinhid);
-		CoSoYTe cs = cosoyteService.getOneById(csid);
-		cs.setTen(cosoyteRequest.getTen());
-		cs.setTinh(tinh);
-		
-		return cosoyteService.save(cs);
-	}
-	
-	@DeleteMapping("/cosoyte/{id}")
+	@DeleteMapping("/cosoyte/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		cosoyteService.delete(id);
 		return ResponseEntity.ok().build();

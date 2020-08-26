@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.intern.model.BenhNhan;
 import com.example.intern.repository.BenhNhanRepository;
@@ -11,6 +12,7 @@ import com.example.intern.service.IBenhNhanService;
 import com.example.intern.exception.*;
 
 @Service
+@Transactional
 public class BenhNhanService implements IBenhNhanService {
 	
 	@Autowired
@@ -38,10 +40,7 @@ public class BenhNhanService implements IBenhNhanService {
 	}
 	
 	@Override
-	public BenhNhan save(BenhNhan benhnhan) throws DuplicateIdException{
-		if(benhnhan.getId() == null) return benhnhanRepository.save(benhnhan);
-		BenhNhan benhnhan2 = benhnhanRepository.getOne(benhnhan.getId());
-		if(benhnhan2 != null) throw new DuplicateIdException("BenhNhan", benhnhan.getId());
+	public BenhNhan save(BenhNhan benhnhan) {
 		return benhnhanRepository.save(benhnhan);
 	}
 	
