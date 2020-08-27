@@ -60,7 +60,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykham);
 	}
 	
-	@DeleteMapping("/dangkykham/{id}")
+	@DeleteMapping("/dangkykham/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id")Long id) {
 		dangkykhamService.delete(id);
 		return ResponseEntity.ok().build();

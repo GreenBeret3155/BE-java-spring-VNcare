@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.intern.model.DangKyKham;
 
 public interface IDangKyKhamService {
-	List<DangKyKham> queryByBenhNhanIdAndBacSiIdAndBenhId(Long benhnhanId, Long bacsiId, Long benhchinhId);
+	List<DangKyKham> queryQuery(Long benhnhanId, Long bacsiId, Long benhchinhId);
 	DangKyKham getOneById(Long id);
 	DangKyKham save(DangKyKham dangkykham);
 	void delete(Long id);
