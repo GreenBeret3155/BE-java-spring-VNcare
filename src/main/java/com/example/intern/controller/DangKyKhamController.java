@@ -26,29 +26,9 @@ public class DangKyKhamController {
 	@Autowired
 	private IDangKyKhamService dangkykhamService;
 	
-	@GetMapping("/dangkykham")
-	public List<DangKyKham> getAll(){
-		return dangkykhamService.getAll();
-	}
-	
 	@GetMapping("/dangkykham/details/{id}")
 	public DangKyKham getOneById(@PathVariable("id")Long id) {
 		return dangkykhamService.getOneById(id);
-	}
-	
-	@GetMapping("/benhchinh/{benhchinhid}/dangkykham")
-	public List<DangKyKham> findByBenhchinhId(@PathVariable("benhchinhid")Long benhchinhid) {
-		return dangkykhamService.findByBenhId(benhchinhid);
-	}
-	
-	@GetMapping("/bacsi/{bacsiid}/dangkykham")
-	public List<DangKyKham> findByBacsiId(@PathVariable("bacsiid")Long bacsiid){
-		return dangkykhamService.findByBacsiId(bacsiid);
-	}
-	
-	@GetMapping("/benhnhan/{benhnhanid}/dangkykham")
-	public List<DangKyKham> findByBenhnhanId(@PathVariable("benhnhanid")Long benhnhanid){
-		return dangkykhamService.findByBenhnhanId(benhnhanid);
 	}
 	
 	@PostMapping("/dangkykham/create")

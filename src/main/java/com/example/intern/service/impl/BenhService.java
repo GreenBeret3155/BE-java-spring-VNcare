@@ -15,14 +15,15 @@ public class BenhService implements IBenhService {
 	
 	@Autowired
 	private BenhRepository benhRepository;
-	
+
 	@Override
-	public List<Benh> getAll() throws ResourceNotFoundException{
-		List<Benh> benh = benhRepository.findAll();
-		if(benh == null ) throw new ResourceNotFoundException("Benh");
+	public List<Benh> queryByTen(String ten) {
+		if(ten == null) return benhRepository.findAll();
+		List<Benh> benh = benhRepository.findByTenContaining(ten);
+		if(benh.size() == 0) throw new ResourceNotFoundException("Benh");
 		return benh;
 	}
-	
+
 	@Override
 	public Benh getOneById(Long id) throws ResourceNotFoundException{
 		Benh benh = benhRepository.findOne(id);

@@ -5,8 +5,7 @@ import java.util.List;
 import com.example.intern.model.Thuoc;
 
 public interface IThuocService {
-	
-	List<Thuoc> getAll();
+	List<Thuoc> queryByTen(String ten);
 	Thuoc getOneById(Long id);
 	Thuoc save (Thuoc thuoc);
 	void delete(Long id);
