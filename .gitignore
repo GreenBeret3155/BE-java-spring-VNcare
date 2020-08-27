@@ -6,7 +6,10 @@ tmp/
 *.swp
 *~.nib
 src/main/resources/application.properties
-target/
+/target/*
 .settings/
 .loadpath
 .recommenders
+*/target/*
+*/.idea/*
+*/.settings/*
