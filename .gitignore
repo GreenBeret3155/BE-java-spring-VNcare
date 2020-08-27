@@ -10,6 +10,6 @@ src/main/resources/application.properties
 .settings/
 .loadpath
 .recommenders
-*/target/*
-*/.idea/*
-*/.settings/*
+/.idea
+/.settings
+/target
