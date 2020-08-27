@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.intern.model.Thuoc;
 
+import java.util.List;
+
 @Repository
 public interface ThuocRepository extends JpaRepository<Thuoc, Long> {
 	//query
+    List<Thuoc> findByTenContaining(String ten);
 }

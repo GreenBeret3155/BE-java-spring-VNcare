@@ -15,39 +15,22 @@ public class DangKyKhamService implements IDangKyKhamService {
 	
 	@Autowired
 	private DangKyKhamRepository dangkykhamRepository;
-	
+
 	@Override
-	public List<DangKyKham> getAll() throws ResourceNotFoundException{
-		List<DangKyKham> dangkykham = dangkykhamRepository.findAll();
-		if(dangkykham == null ) throw new ResourceNotFoundException("DangKyKham");
-		return dangkykham;
+	public List<DangKyKham> queryByBenhNhanIdAndBacSiIdAndBenhId(Long benhnhanId, Long bacsiId, Long benhchinhId) {
+		if(benhnhanId == null && bacsiId == null &&benhchinhId == null) return dangkykhamRepository.findAll();
+		if(bacsiId == null && benhchinhId == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findByBenhnhanId(benhnhanId);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("DangKyKham","benhnhanid",benhnhanId);
+			return dangKyKham;
+		}
+		return dangkykhamRepository.findAll();		//cai nay dang sai va thieu, viet de push len thoi
 	}
-	
+
 	@Override
 	public DangKyKham getOneById(Long id) throws ResourceNotFoundException{
 		DangKyKham dangkykham = dangkykhamRepository.findOne(id);
 		if(dangkykham == null ) throw new ResourceNotFoundException("DangKyKham","id",id);
-		return dangkykham;
-	}
-	
-	@Override
-	public List<DangKyKham> findByBenhnhanId(Long benhnhanid) throws ResourceNotFoundException{
-		List<DangKyKham> dangkykham = dangkykhamRepository.findByBenhnhanId(benhnhanid);
-		if(dangkykham == null ) throw new ResourceNotFoundException("DangKyKham","benhnhanid",benhnhanid);
-		return dangkykham;
-	}
-	
-	@Override
-	public List<DangKyKham> findByBacsiId(Long bacsiid) throws ResourceNotFoundException{
-		List<DangKyKham> dangkykham = dangkykhamRepository.findByBacsiId(bacsiid);
-		if(dangkykham == null ) throw new ResourceNotFoundException("DangKyKham","bacsiid",bacsiid);
-		return dangkykham;
-	}
-	
-	@Override
-	public List<DangKyKham> findByBenhId(Long benhchinhid) throws ResourceNotFoundException{
-		List<DangKyKham> dangkykham = dangkykhamRepository.findByBenhId(benhchinhid);
-		if(dangkykham == null ) throw new ResourceNotFoundException("DangKyKham","benhchinhid",benhchinhid);
 		return dangkykham;
 	}
 	
