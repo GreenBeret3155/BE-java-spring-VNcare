@@ -37,9 +37,7 @@ public class TaiKhoanController {
 	public TaiKhoan getOneById(@PathVariable("id")Long id) {
 		return taikhoanService.getOneById(id);
 	}
-	//anh viet ngao
-	// anh viet ngao 2
-	//anh viet ngao 3
+
 	@PostMapping("/taikhoan/create")
 	public TaiKhoan createTaiKhoan(@Valid @RequestBody TaiKhoan taikhoan ) {
 		if(taikhoan.getId() == null) return taikhoanService.save(taikhoan);
@@ -48,7 +46,7 @@ public class TaiKhoanController {
 		
 		return taikhoanService.save(taikhoan);
 	}
-	//anh viet dz3
+
 	@PutMapping("/taikhoan/update/{id}")
 	public TaiKhoan updateTaiKhoan (@PathVariable("id")Long id,
 			@Valid @RequestBody TaiKhoan taikhoanRequest) {
