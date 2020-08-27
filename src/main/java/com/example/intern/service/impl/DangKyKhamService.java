@@ -17,7 +17,7 @@ public class DangKyKhamService implements IDangKyKhamService {
 	private DangKyKhamRepository dangkykhamRepository;
 
 	@Override
-	public List<DangKyKham> queryByBenhNhanIdAndBacSiIdAndBenhId(Long benhnhanId, Long bacsiId, Long benhchinhId) {
+	public List<DangKyKham> queryQuery(Long benhnhanId, Long bacsiId, Long benhchinhId) {
 		if(benhnhanId == null && bacsiId == null &&benhchinhId == null) return dangkykhamRepository.findAll();
 		if(bacsiId == null && benhchinhId == null){
 			List<DangKyKham> dangKyKham = dangkykhamRepository.findByBenhnhanId(benhnhanId);
