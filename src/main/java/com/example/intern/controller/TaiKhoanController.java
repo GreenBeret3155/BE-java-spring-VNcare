@@ -37,6 +37,7 @@ public class TaiKhoanController {
 	public TaiKhoan getOneById(@PathVariable("id")Long id) {
 		return taikhoanService.getOneById(id);
 	}
+	//anh viet ngao
 	
 	@PostMapping("/taikhoan/create")
 	public TaiKhoan createTaiKhoan(@Valid @RequestBody TaiKhoan taikhoan ) {

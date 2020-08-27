@@ -39,7 +39,7 @@ public class ThuocController {
 	}
 	
 	@PutMapping("/thuoc/update/{id}")
-	public Thuoc updateThuoc ( @PathVariable("id") Long id,
+	public Thuoc updateThuoc ( @PathVariable("id") Long id,	
 			@Valid @RequestBody Thuoc thuocRequest) {
 		Thuoc thuoc = thuocService.getOneById(id);
 		thuoc.setTen(thuocRequest.getTen());
