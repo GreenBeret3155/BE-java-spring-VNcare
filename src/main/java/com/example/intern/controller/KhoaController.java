@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.exception.DuplicateIdException;
@@ -27,9 +28,10 @@ public class KhoaController {
 	private IKhoaService khoaService;
 	
 	
-	@GetMapping("/khoa")
-	public List<Khoa> getAll(){
-		return khoaService.getAll();
+	@GetMapping("/khoa/search")
+	public List<Khoa> queryByTenAndCosoyteId(@RequestParam(name = "ten", required = false )String ten,
+			@RequestParam(name = "cosoyteid", required = false)Long cosoyteid){
+		return khoaService.queryByTenAndCosoyteId(ten,cosoyteid);
 	}
 	
 	@GetMapping("/khoa/details/{id}")

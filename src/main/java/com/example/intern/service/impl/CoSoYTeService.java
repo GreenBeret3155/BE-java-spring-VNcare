@@ -31,7 +31,7 @@ public class CoSoYTeService implements ICoSoYTeService {
 			return cosoyte;
 		}
 		List<CoSoYTe> cosoyte = cosoyteRepository.findByTenContainingAndTinhId(ten,tinhid);
-		if( cosoyte.size() ==0 ) throw new ResourceNotFoundException("CoSoYTe", "tinhid",tinhid);
+		if( cosoyte.size() ==0 ) throw new ResourceNotFoundException("CoSoYTe");
 		return cosoyte;
 	}
 	

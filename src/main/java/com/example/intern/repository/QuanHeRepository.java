@@ -15,7 +15,7 @@ import com.example.intern.model.QuanHe;
 public interface QuanHeRepository extends JpaRepository<QuanHe, Long>{
 	//query
 	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid);
-	QuanHe findByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid);
+	List<QuanHe> findByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid);
 	
 	@Modifying
 	@Query("delete from QuanHe q where q.benhnhanchinh=:benhnhanchinh and q.benhnhanphu=:benhnhanphu")
