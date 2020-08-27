@@ -6,7 +6,7 @@ import com.example.intern.model.Khoa;
 
 public interface IKhoaService {
 	
-	List<Khoa> getAll();
+	List<Khoa>queryByTenAndCosoyteId(String ten, Long cosoyteid);
 	Khoa getOneById(Long id);
 	List<Khoa> findByCosoyteId(Long cosoyteid);
 	Khoa save(Khoa khoa);

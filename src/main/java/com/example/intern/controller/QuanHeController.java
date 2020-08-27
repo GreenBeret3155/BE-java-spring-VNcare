@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.service.IBenhNhanService;
@@ -31,16 +32,12 @@ public class QuanHeController {
 	@Autowired
 	private IBenhNhanService benhnhanService;
 	
-	@GetMapping("/quanhe")
-	public List<QuanHe> getAll(){
-		return quanheService.getAll();
-	}
 	
-	@GetMapping("/benhnhan/{benhnhanchinhid}/quanhe")
-	public List<QuanHe> findByBenhnhanchinhId(@PathVariable("benhnhanchinhid")Long benhnhanchinhid){
-		return quanheService.findByBenhnhanchinhId(benhnhanchinhid);
+	@GetMapping("/quanhe/search")
+	public List<QuanHe> queryByBenhnhanchinhIdAndBenhnhanphuId(@RequestParam(name = "idchinh", required = false)Long benhnhanchinhid ,
+			@RequestParam(name = "idphu", required = false)Long benhnhanphuid){
+		return quanheService.queryByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid,benhnhanphuid);
 	}
-	// findby benhnhanchinhid, benhnhanphuid
 	
 	@PostMapping("/quanhe/create")
 	public QuanHe createQuanHe(@Valid @RequestBody QuanHe quanheRequest) {

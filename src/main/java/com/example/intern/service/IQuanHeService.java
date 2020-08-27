@@ -6,10 +6,8 @@ import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
 
 public interface IQuanHeService {
-	List<QuanHe> getAll();
-	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid);
+	List<QuanHe> queryByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid,Long benhnhanphuid);
 	QuanHe getOneById(Long id);
-	QuanHe getOneByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid);
 	QuanHe save(QuanHe quanhe);
 	void deleleByBenhnhanchinhIdAndBenhnhanphu(BenhNhan benhnhanchinh, BenhNhan benhnhanphu);
 }

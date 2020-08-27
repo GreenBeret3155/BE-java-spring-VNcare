@@ -1,0 +1,15 @@
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+src/main/resources/application.properties
+/target/*
+.settings/
+.loadpath
+.recommenders
+/.idea
+/.settings
+/target

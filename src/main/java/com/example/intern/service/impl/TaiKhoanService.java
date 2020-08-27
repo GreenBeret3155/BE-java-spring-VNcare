@@ -17,9 +17,20 @@ public class TaiKhoanService implements ITaiKhoanService {
 	private TaiKhoanRepository taikhoanRepository;
 	
 	@Override
-	public List<TaiKhoan> getAll() throws ResourceNotFoundException{
-		List<TaiKhoan> taikhoan = taikhoanRepository.findAll();
-		if(taikhoan == null) throw new ResourceNotFoundException("TaiKhoan");
+	public List<TaiKhoan> queryByEmailAndSdt(String email, String sdt) throws ResourceNotFoundException{
+		if(email == null && sdt == null) return taikhoanRepository.findAll();
+		if(email == null ) {
+			List<TaiKhoan> taikhoan = taikhoanRepository.findBySdtContaining(sdt);
+			if( taikhoan.size() ==0 ) throw new ResourceNotFoundException("TaiKhoan","sdt",sdt);
+			return taikhoan;
+		}
+		if(sdt == null) {
+			List<TaiKhoan> taikhoan = taikhoanRepository.findByEmailContaining(email);
+			if( taikhoan.size() ==0 ) throw new ResourceNotFoundException("TaiKhoan", "email",email);
+			return taikhoan;
+		}
+		List<TaiKhoan> taikhoan = taikhoanRepository.findByEmailContainingAndSdtContaining(email,sdt);
+		if( taikhoan.size() ==0 ) throw new ResourceNotFoundException("TaiKhoan");
 		return taikhoan;
 	}
 	
