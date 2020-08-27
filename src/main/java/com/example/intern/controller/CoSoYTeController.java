@@ -28,7 +28,7 @@ public class CoSoYTeController {
 	public ICoSoYTeService cosoyteService;
 	
 	
-	@GetMapping("/search")
+	@GetMapping("/cosoyte/search")
 	public List<CoSoYTe> getAll(@RequestParam(name = "ten", required = false)String ten,
 			@RequestParam(name = "tinhid", required = false)Long  tinhid){
 		return cosoyteService.queryByTenAndTinh(ten, tinhid);

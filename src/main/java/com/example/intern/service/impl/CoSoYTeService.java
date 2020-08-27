@@ -21,17 +21,17 @@ public class CoSoYTeService implements ICoSoYTeService {
 	public List<CoSoYTe> queryByTenAndTinh(String ten,Long tinhid) throws ResourceNotFoundException{
 		if(ten == null && tinhid == null) return cosoyteRepository.findAll();
 		if(tinhid == null ) {
-			List<CoSoYTe> cosoyte = cosoyteRepository.findByTen(ten);
-			if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+			List<CoSoYTe> cosoyte = cosoyteRepository.findByTenContaining(ten);
+			if( cosoyte.size() ==0 ) throw new ResourceNotFoundException("CoSoYTe","ten",ten);
 			return cosoyte;
 		}
 		if(ten == null) {
 			List<CoSoYTe> cosoyte = cosoyteRepository.findByTinhId(tinhid);
-			if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+			if( cosoyte.size() ==0 ) throw new ResourceNotFoundException("CoSoYTe", "tinhid",tinhid);
 			return cosoyte;
 		}
-		List<CoSoYTe> cosoyte = cosoyteRepository.findByTenAndTinhId(ten,tinhid);
-		if( cosoyte == null ) throw new ResourceNotFoundException("Tinh");
+		List<CoSoYTe> cosoyte = cosoyteRepository.findByTenContainingAndTinhId(ten,tinhid);
+		if( cosoyte.size() ==0 ) throw new ResourceNotFoundException("CoSoYTe", "tinhid",tinhid);
 		return cosoyte;
 	}
 	

@@ -13,6 +13,6 @@ public interface CoSoYTeRepository extends JpaRepository<CoSoYTe, Long> {
 	//	@Query("select c from dm_cosoyte c join dm_tinh where tinhid = ?1 ")
 	//	public List<CoSoYTe> getAllCoSoYTefromTinhById(Long id);
 	List<CoSoYTe> findByTinhId (Long tinhid);
-	List<CoSoYTe> findByTen(String ten);
-	List<CoSoYTe> findByTenAndTinhId(String ten,Long tinhid);
+	List<CoSoYTe> findByTenContaining(String ten);
+	List<CoSoYTe> findByTenContainingAndTinhId(String ten,Long tinhid);
 }
