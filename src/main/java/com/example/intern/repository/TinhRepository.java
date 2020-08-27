@@ -10,5 +10,5 @@ import com.example.intern.model.Tinh;
 @Repository
 public interface TinhRepository extends JpaRepository<Tinh, Long> {
 	// more query here
-	List<Tinh> findByTen(String ten);
+	List<Tinh> findByTenContaining(String ten);
 }

@@ -17,17 +17,11 @@ public class TinhService implements ITinhService {
 	private TinhRepository tinhRepository;
 	
 	@Override
-	public List<Tinh> getAll() throws ResourceNotFoundException{
-		List<Tinh> tinh = tinhRepository.findAll();
-		if( tinh == null ) throw new ResourceNotFoundException("Tinh");
-		return tinh;
-	}
-	
-	@Override
 	public List<Tinh> queryByTen(String ten){
 		if(ten == null) return tinhRepository.findAll();
-		List<Tinh> tinh = tinhRepository.findByTen(ten);
-		if( tinh == null ) throw new ResourceNotFoundException("Tinh");
+		List<Tinh> tinh = tinhRepository.findByTenContaining(ten);
+		if( tinh.size() ==0 ) throw new ResourceNotFoundException("Tinh");
+		
 		return tinh;
 	}
 	

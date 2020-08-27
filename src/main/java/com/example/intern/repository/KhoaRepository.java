@@ -11,4 +11,6 @@ import com.example.intern.model.Khoa;
 public interface KhoaRepository extends JpaRepository<Khoa, Long> {
 	//query
 	List<Khoa> findByCosoyteId(Long cosoyteid);
+	List<Khoa> findByTenContaining(String ten);
+	List<Khoa> findByTenContainingAndCosoyteId(String ten, Long cosoyteid);
 }

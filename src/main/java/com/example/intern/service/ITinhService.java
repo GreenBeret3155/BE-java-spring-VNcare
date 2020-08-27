@@ -4,7 +4,6 @@ import java.util.List;
 import com.example.intern.model.Tinh;
 
 public interface ITinhService {
-	List<Tinh> getAll();
 	List<Tinh> queryByTen(String ten);
 	Tinh getOneById(Long id);
 	Tinh save(Tinh tinh);
