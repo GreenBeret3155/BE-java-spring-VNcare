@@ -19,9 +19,16 @@ public class QuanHeService implements IQuanHeService {
 	@Autowired
 	private QuanHeRepository quanheRepository;
 	
-	@Override
-	public List<QuanHe> getAll() throws ResourceNotFoundException{
-		List<QuanHe> quanhe = quanheRepository.findAll();
+		
+	@Override 
+	public 	List<QuanHe> queryByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) throws ResourceNotFoundException{
+		if(benhnhanchinhid == null && benhnhanphuid == null ) return quanheRepository.findAll();
+		if(benhnhanphuid == null) {
+			List<QuanHe> quanhe = quanheRepository.findByBenhnhanchinhId(benhnhanchinhid);
+			if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanchinhid", benhnhanchinhid);
+			return quanhe;
+		}
+		List<QuanHe> quanhe = quanheRepository.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid,benhnhanphuid);
 		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe");
 		return quanhe;
 	}
@@ -29,21 +36,7 @@ public class QuanHeService implements IQuanHeService {
 	@Override
 	public QuanHe getOneById(Long id) throws ResourceNotFoundException{
 		QuanHe quanhe = quanheRepository.findOne(id);
-		if(quanhe == null) throw new ResourceNotFoundException("QuanHe","id", id);
-		return quanhe;
-	}
-		
-	@Override 
-	public 	List<QuanHe> findByBenhnhanchinhId(Long benhnhanchinhid) throws ResourceNotFoundException{
-		List<QuanHe> quanhe = quanheRepository.findByBenhnhanchinhId(benhnhanchinhid);
-		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanchinhid", benhnhanchinhid);
-		return quanhe;
-	}
-	
-	@Override
-	public QuanHe getOneByBenhnhanchinhIdAndBenhnhanphuId(Long benhnhanchinhid, Long benhnhanphuid) throws ResourceNotFoundException{
-		QuanHe quanhe = quanheRepository.findByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid, benhnhanphuid);
-		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "benhnhanphuid", benhnhanphuid);
+		if(quanhe == null ) throw new ResourceNotFoundException("QuanHe", "id", id);
 		return quanhe;
 	}
 	

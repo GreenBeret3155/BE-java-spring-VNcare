@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.exception.DuplicateIdException;
@@ -26,9 +27,10 @@ public class TaiKhoanController {
 	@Autowired
 	private ITaiKhoanService taikhoanService;
 	
-	@GetMapping("/taikhoan")
-	public List<TaiKhoan> getAll(){
-		return taikhoanService.getAll();
+	@GetMapping("/taikhoan/search")
+	public List<TaiKhoan> queryByEmailAndSdt(@RequestParam(name = "email",required = false)String email,
+			@RequestParam(name = "sdt", required = false)String sdt){
+		return taikhoanService.queryByEmailAndSdt(email,sdt);
 	}
 	
 	@GetMapping("/taikhoan/details/{id}")

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.exception.DuplicateIdException;
@@ -31,9 +32,11 @@ public class BenhNhanController {
 	@Autowired
 	private IQuanHeService quanheService;
 	
-	@GetMapping("/benhnhan")
-	public List<BenhNhan> getAll(){
-		return benhnhanService.getAll();
+	@GetMapping("/benhnhan/search")
+	public List<BenhNhan> getAll(@RequestParam(name = "ten", required = false)String ten,
+			@RequestParam(name = "gioitinh",required = false)Boolean gioitinh,
+			@RequestParam(name = "diachi",required = false)String diachi){
+		return benhnhanService.queryByTenAndNgaysinhAndDiachi(ten,gioitinh,diachi);
 	}
 	
 	@GetMapping("/benhnhan/details/{id}")
@@ -41,10 +44,6 @@ public class BenhNhanController {
 		return benhnhanService.getOneById(id);
 	}
 	
-	@GetMapping("/taikhoan/{taikhoanid}/benhnhan")
-	public BenhNhan findByTaikhoanId(@PathVariable("taikhoanid") Long taikhoanid ) {
-		return benhnhanService.findByTaikhoanId(taikhoanid);
-	}
 	
 	
 	@PostMapping("/benhnhan/create")

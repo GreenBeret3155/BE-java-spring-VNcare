@@ -17,9 +17,20 @@ public class KhoaService implements IKhoaService {
 	private KhoaRepository khoaRepository;
 	
 	@Override
-	public List<Khoa> getAll() throws ResourceNotFoundException{
-		List<Khoa> khoa = khoaRepository.findAll();
-		if(khoa == null) throw new ResourceNotFoundException("Khoa");
+	public List<Khoa> queryByTenAndCosoyteId(String ten, Long cosoyteid) throws ResourceNotFoundException{
+		if(ten == null && cosoyteid == null) return khoaRepository.findAll();
+		if(cosoyteid == null ) {
+			List<Khoa> khoa = khoaRepository.findByTenContaining(ten);
+			if( khoa.size() ==0 ) throw new ResourceNotFoundException("Khoa","ten",ten);
+			return khoa;
+		}
+		if(ten == null) {
+			List<Khoa> khoa = khoaRepository.findByCosoyteId(cosoyteid);
+			if( khoa.size() ==0 ) throw new ResourceNotFoundException("Khoa", "cosoyteid",cosoyteid);
+			return khoa;
+		}
+		List<Khoa> khoa = khoaRepository.findByTenContainingAndCosoyteId(ten,cosoyteid);
+		if( khoa.size() ==0 ) throw new ResourceNotFoundException("Khoa");
 		return khoa;
 	}
 	

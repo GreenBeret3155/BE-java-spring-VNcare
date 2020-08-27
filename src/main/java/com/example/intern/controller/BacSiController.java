@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.model.BacSi;
-import com.example.intern.model.Khoa;
-import com.example.intern.model.TaiKhoan;
 import com.example.intern.service.IBacSiService;
-import com.example.intern.service.IKhoaService;
-import com.example.intern.service.ITaiKhoanService;
 
 @RestController
 @RequestMapping("/api")
@@ -29,48 +26,28 @@ public class BacSiController {
 	@Autowired 
 	private IBacSiService bacsiService;
 	
-	@Autowired
-	private IKhoaService khoaService;
 	
-	@Autowired
-	private ITaiKhoanService taikhoanService;
-	
-	@GetMapping("/bacsi")
-	public List<BacSi> getAll(){
-		return bacsiService.getAll();
+	@GetMapping("/bacsi/search")
+	public List<BacSi> queryByTenAndTrinhdoAndKhoaId(@RequestParam(name = "ten", required = false)String ten ,
+			@RequestParam (name = "trinhdo", required = false)String trinhdo,
+			@RequestParam(name = "khoaid", required = false)Long khoaid){
+		return bacsiService.queryByTenAndTrinhdoAndKhoaId(ten,trinhdo,khoaid);
 	}
 	
-	@GetMapping("/bacsi/{id}")
+	@GetMapping("/bacsi/details/{id}")
 	public BacSi getOneById(@PathVariable("id") Long id) {
 		return bacsiService.getOneById(id);
 	}
 	
-	@GetMapping("/khoa/{khoaid}/bacsi")
-	public List<BacSi> findByKhoaId(@PathVariable("khoaid") Long khoaid){
-		return bacsiService.findByKhoaId(khoaid);
+	@PostMapping("/bacsi/create")
+	public BacSi createBacSi(@Valid @RequestBody BacSi bacsi) {
+		return bacsiService.save(bacsi);
 	}
 	
-	@GetMapping("/taikhoan/{taikhoanid}/bacsi")
-	public BacSi findByTaikhoanId(@PathVariable("taikhoanid") Long taikhoanid){
-		return bacsiService.findByTaikhoanId(taikhoanid);
-	}
-	
-	@PostMapping("/khoa/{khoaid}/taikhoan/{taikhoanid}/bacsi")
-	public BacSi createBacSi(@PathVariable("khoaid") Long khoaid,
-			@PathVariable("taikhoanid") Long taikhoanid,
+	@PutMapping("/bacsi/update/{id}")
+	public BacSi updateBacSiByKhoaId(@PathVariable("id") Long id,
 			@Valid @RequestBody BacSi bacsiRequest) {
-		Khoa khoa = khoaService.getOneById(khoaid);
-		TaiKhoan taikhoan = taikhoanService.getOneById(taikhoanid);
-		
-		bacsiRequest.setKhoa(khoa);
-		bacsiRequest.setTaikhoan(taikhoan);
-		return bacsiService.save(bacsiRequest);
-	}
-	
-	@PutMapping("/bacsi/{bacsiid}")
-	public BacSi updateBacSi(@PathVariable("bacsiid") Long bacsiid,
-			@Valid @RequestBody BacSi bacsiRequest) {
-		BacSi bacsi = bacsiService.getOneById(bacsiid);
+		BacSi bacsi = bacsiService.getOneById(id);
 		
 		bacsi.setTen(bacsiRequest.getTen());
 		bacsi.setChuyenkhoa(bacsiRequest.getChuyenkhoa());
@@ -81,23 +58,7 @@ public class BacSiController {
 		return bacsiService.save(bacsi);
 	}
 	
-	@PutMapping("/khoa/{khoaid}/bacsi/{bacsiid}")
-	public BacSi updateBacSiByKhoaId(@PathVariable("bacsiid") Long bacsiid,
-			@PathVariable("khoaid") Long khoaid,
-			@Valid @RequestBody BacSi bacsiRequest) {
-		Khoa khoa = khoaService.getOneById(khoaid);
-		BacSi bacsi = bacsiService.getOneById(bacsiid);
-		
-		bacsi.setTen(bacsiRequest.getTen());
-		bacsi.setChuyenkhoa(bacsiRequest.getChuyenkhoa());
-		bacsi.setTrinhdo(bacsiRequest.getTrinhdo());
-		bacsi.setMota(bacsiRequest.getMota());
-		bacsi.setKhoa(khoa);
-		
-		return bacsiService.save(bacsi);
-	}
-	
-	@DeleteMapping("/bacsi/{id}")
+	@DeleteMapping("/bacsi/delete/{id}")
 	public ResponseEntity<?> deleteBacSi(@PathVariable("id") Long id) {
 		bacsiService.delete(id);
 		return ResponseEntity.ok().build();

@@ -11,5 +11,12 @@ import com.example.intern.model.BacSi;
 public interface BacSiRepository extends JpaRepository<BacSi, Long> {
 	//query
 	List<BacSi> findByKhoaId(Long khoaid);
+	List<BacSi> findByTenContaining(String ten);
+	List<BacSi> findByTrinhdo(String trinhdo);
+	List<BacSi> findByTenContainingAndKhoaId(String ten,Long khoaid);
+	List<BacSi> findByTrinhdoAndKhoaId(String trinhdo,Long khoaid);
+	List<BacSi> findByTenContainingAndTrinhdo(String ten,String trinhdo);
+	List<BacSi> findByTenContainingAndTrinhdoAndKhoaId(String ten,String trinhdo,Long khoaid);
+	
 	BacSi findByTaikhoanId (Long taikhoanid);
 }

@@ -19,9 +19,47 @@ public class BenhNhanService implements IBenhNhanService {
 	private BenhNhanRepository benhnhanRepository;
 	
 	@Override
-	public List<BenhNhan> getAll() throws ResourceNotFoundException{
-		List<BenhNhan> benhnhan = benhnhanRepository.findAll();
-		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan");
+	public List<BenhNhan> queryByTenAndNgaysinhAndDiachi(String ten, Boolean gioitinh, String diachi) throws ResourceNotFoundException{
+		if(ten == null && gioitinh == null && diachi == null) return benhnhanRepository.findAll();
+		
+		if(ten == null && diachi == null ) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByGioitinh(gioitinh);
+			if( benhnhan.size() ==0 ) throw new ResourceNotFoundException("BenhNhan","gioitinh",gioitinh);
+			return benhnhan;
+		}
+		
+		if(gioitinh == null && diachi == null ) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByTenContaining(ten);
+			if( benhnhan.size() ==0 ) throw new ResourceNotFoundException("BenhNhan","ten",ten);
+			return benhnhan;
+		}
+		
+		if(ten == null && gioitinh == null) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByDiachiContaining(diachi);
+			if( benhnhan.size() ==0 ) throw new ResourceNotFoundException("BenhNhan", "diachi",diachi);
+			return benhnhan;
+		}
+		
+		if(ten == null) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByGioitinhAndDiachiContaining(gioitinh,diachi);
+			if( benhnhan.size() == 0) throw new ResourceNotFoundException("BenhNhan");
+			return benhnhan;
+		}
+		
+		if(gioitinh == null) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByTenContainingAndDiachiContaining(ten,diachi);
+			if( benhnhan.size() == 0) throw new ResourceNotFoundException("BenhNhan");
+			return benhnhan;
+		}
+		
+		if(diachi == null) {
+			List<BenhNhan> benhnhan = benhnhanRepository.findByTenContainingAndGioitinh(ten,gioitinh);
+			if( benhnhan.size() == 0) throw new ResourceNotFoundException("BenhNhan");
+			return benhnhan;
+		}
+		
+		List<BenhNhan> benhnhan = benhnhanRepository.findByTenContainingAndGioitinhAndDiachiContaining(ten,gioitinh,diachi);
+		if( benhnhan.size() ==0 ) throw new ResourceNotFoundException("BenhNhan");
 		return benhnhan;
 	}
 	
@@ -32,12 +70,12 @@ public class BenhNhanService implements IBenhNhanService {
 		return benhnhan;
 	}
 	
-	@Override
-	public BenhNhan findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
-		BenhNhan benhnhan = benhnhanRepository.findByTaikhoanId(taikhoanid);
-		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","taikhoanid",taikhoanid);
-		return benhnhan;
-	}
+//	@Override
+//	public BenhNhan findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
+//		BenhNhan benhnhan = benhnhanRepository.findByTaikhoanId(taikhoanid);
+//		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","taikhoanid",taikhoanid);
+//		return benhnhan;
+//	}
 	
 	@Override
 	public BenhNhan save(BenhNhan benhnhan) {
