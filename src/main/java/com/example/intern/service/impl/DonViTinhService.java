@@ -15,14 +15,15 @@ public class DonViTinhService implements IDonViTinhService {
 	
 	@Autowired
 	private DonViTinhRepository donvitinhRepository;
-	
+
 	@Override
-	public List<DonViTinh> getAll() throws ResourceNotFoundException{
-		List<DonViTinh> donvitinh = donvitinhRepository.findAll();
-		if(donvitinh == null) throw new ResourceNotFoundException("DonViTinh");
-		return donvitinh;
+	public List<DonViTinh> queryByTen(String ten) {
+		if(ten == null) return donvitinhRepository.findAll();
+		List<DonViTinh> donViTinh = donvitinhRepository.findByTenContaining(ten);
+		if(donViTinh.size() == 0) throw new ResourceNotFoundException("DonViTinh");
+		return donViTinh;
 	}
-	
+
 	@Override
 	public DonViTinh getOneById(Long id) throws ResourceNotFoundException{
 		DonViTinh donvitinh = donvitinhRepository.findOne(id);

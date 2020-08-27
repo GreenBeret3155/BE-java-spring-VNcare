@@ -6,14 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.Benh;
@@ -25,12 +18,12 @@ public class BenhController {
 	
 	@Autowired
 	private IBenhService benhService;
-	
-	@GetMapping("/benh")
-	public List<Benh> getAll(){
-		return benhService.getAll();
+
+	@GetMapping("benh/search")
+	public List<Benh> queryTen(@RequestParam(name = "ten", required = false )String ten){
+		return benhService.queryByTen(ten);
 	}
-	
+
 	@GetMapping("/benh/details/{id}")
 	public Benh getOneById(@PathVariable("id") Long id) {
 		return benhService.getOneById(id);

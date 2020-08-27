@@ -6,14 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.DonViTinh;
@@ -25,10 +18,10 @@ public class DonViTinhController {
 	
 	@Autowired
 	private IDonViTinhService donvitinhService;
-	
-	@GetMapping("/donvitinh")
-	public List<DonViTinh> getAll(){
-		return donvitinhService.getAll();
+
+	@GetMapping("/donvitinh/search")
+	public List<DonViTinh> queryDonViTinh(@RequestParam(name = "ten", required = false )String ten){
+		return donvitinhService.queryByTen(ten);
 	}
 	
 	@GetMapping("/donvitinh/details/{id}")

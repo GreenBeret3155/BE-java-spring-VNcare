@@ -17,24 +17,28 @@ public class DonThuocService implements IDonThuocService  {
 	
 	@Autowired
 	private DonThuocRepository donthuocRepository;
-	
+
 	@Override
-	public List<DonThuoc> getAll() throws ResourceNotFoundException{
-		List<DonThuoc> donthuoc = donthuocRepository.findAll();
-		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
-		return donthuoc;
+	public List<DonThuoc> queryByDangKyKhamIdAndTenThuoc(Long dangkykhamId, Long thuocId) {
+		if(dangkykhamId == null && thuocId == null) return donthuocRepository.findAll();
+		if(dangkykhamId == null){
+			List<DonThuoc> donThuoc = donthuocRepository.findByThuocId(thuocId);
+			if(donThuoc.size() == 0) throw new ResourceNotFoundException("DonThuoc","thuocid",thuocId);
+			return donThuoc;
+		}
+		if(thuocId == null){
+			List<DonThuoc> donThuoc = donthuocRepository.findByDangkykhamId(dangkykhamId);
+			if(donThuoc.size() == 0) throw new ResourceNotFoundException("DonThuoc","dangkykhamid",dangkykhamId);
+			return donThuoc;
+		}
+		List<DonThuoc> donThuoc = donthuocRepository.findByThuocIdAndDangkykhamId(dangkykhamId, thuocId);
+		if(donThuoc.size() == 0) throw new ResourceNotFoundException("DonThuoc");
+		return donThuoc;
 	}
-	
+
 	@Override
 	public DonThuoc getOneById(Long id) throws ResourceNotFoundException{
 		DonThuoc donthuoc = donthuocRepository.findOne(id);
-		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
-		return donthuoc;
-	}
-	
-	@Override
-	public List<DonThuoc> findByDangKyKhamId(Long dangkykhamid) throws ResourceNotFoundException{
-		List<DonThuoc> donthuoc = donthuocRepository.findByDangkykhamId(dangkykhamid);
 		if(donthuoc == null ) throw new ResourceNotFoundException("DonThuoc");
 		return donthuoc;
 	}
