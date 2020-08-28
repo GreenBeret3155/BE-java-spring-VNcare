@@ -12,7 +12,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
-src/main/resources/application.properties
+/src/main/resources/application.properties
 /target/*
 .settings/
 .loadpath
