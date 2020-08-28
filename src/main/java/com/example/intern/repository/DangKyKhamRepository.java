@@ -10,7 +10,7 @@ import com.example.intern.model.DangKyKham;
 @Repository
 public interface DangKyKhamRepository extends JpaRepository<DangKyKham, Long> {
 	//query
-	List<DangKyKham> findByBenhnhanIdAndbAndBacsiId(Long benhnhanId, Long bacsiId);
+	List<DangKyKham> findByBenhnhanIdAndBacsiId(Long benhnhanId, Long bacsiId);
 	List<DangKyKham> findByBacsiIdAndBenhId(Long bacsiId, Long benhId);
 	List<DangKyKham> findByBenhnhanId(Long benhnhanid);
 	List<DangKyKham> findByBacsiId(Long bacsiid);
