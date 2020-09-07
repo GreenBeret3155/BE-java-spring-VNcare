@@ -1,19 +1,14 @@
 package com.example.intern.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.intern.exception.DuplicateIdException;
 import com.example.intern.model.DangKyKham;
@@ -25,7 +20,22 @@ public class DangKyKhamController {
 	
 	@Autowired
 	private IDangKyKhamService dangkykhamService;
-	
+
+	@GetMapping("/dangkykham/search")
+	public List<DangKyKham> queryQuery(@RequestParam("thoigiandkbegin")
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiandkBegin,
+									   @RequestParam("thoigiandkend")
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiandkEnd,
+									   @RequestParam("thoigiankhambegin")
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiankhamBegin,
+									   @RequestParam("thoigiankhamend")
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiankhamEnd,
+									   @RequestParam(name = "trangthaikham", required = false)boolean trangthaikham,
+									   @RequestParam(name = "benhnhanid", required = false)Long benhnhanid,
+									   @RequestParam(name = "bacsiid", required = false)Long bacsiid){
+		return dangkykhamService.queryQuery(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,benhnhanid,bacsiid);
+	}
+
 	@GetMapping("/dangkykham/details/{id}")
 	public DangKyKham getOneById(@PathVariable("id")Long id) {
 		return dangkykhamService.getOneById(id);
