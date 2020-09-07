@@ -18,7 +18,7 @@ public class DangKyKhamService implements IDangKyKhamService {
 	private DangKyKhamRepository dangkykhamRepository;
 
 	@Override
-	public List<DangKyKham> queryQuery(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham, Long benhnhanId, Long bacsiId)
+	public List<DangKyKham> queryQuery(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham, Long benhnhanId, Long bacsiId)
 	{
 		if(bacsiId == null && benhnhanId == null) return dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham);
 		if(bacsiId == null){
