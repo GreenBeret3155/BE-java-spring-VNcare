@@ -18,9 +18,28 @@ public class DangKyKhamService implements IDangKyKhamService {
 	private DangKyKhamRepository dangkykhamRepository;
 
 	@Override
-	public List<DangKyKham> queryQuery(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham, Long benhnhanId, Long bacsiId)
+	public List<DangKyKham> queryQuery(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham, Long benhnhanId, Long bacsiId)
 	{
-		if(bacsiId == null && benhnhanId == null) return dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham);
+		if(bacsiId == null && benhnhanId == null && trangthaikham == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetween(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangykham");
+			return dangKyKham;
+		}
+		if(bacsiId == null && benhnhanId == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham");
+			return dangKyKham;
+		}
+		if(bacsiId == null && trangthaikham == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndBenhnhanId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,benhnhanId);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham");
+			return dangKyKham;
+		}
+		if(benhnhanId == null && trangthaikham == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndBacsiId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,bacsiId);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham");
+			return dangKyKham;
+		}
 		if(bacsiId == null){
 			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBenhnhanId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,benhnhanId);
 			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham","benhnhanId",benhnhanId);
@@ -31,7 +50,14 @@ public class DangKyKhamService implements IDangKyKhamService {
 			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham","bacsiId",bacsiId);
 			return dangKyKham;
 		}
-		return dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiIdAndBenhnhanId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,bacsiId,benhnhanId);
+		if(trangthaikham == null){
+			List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndBenhnhanIdAndBacsiId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,benhnhanId,bacsiId);
+			if(dangKyKham.size() == 0) throw new ResourceNotFoundException("dangkykham","bacsiId",bacsiId);
+			return dangKyKham;
+		}
+		List<DangKyKham> dangKyKham = dangkykhamRepository.findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiIdAndBenhnhanId(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,bacsiId,benhnhanId);
+ 		if(dangKyKham.size() == 0) throw new ResourceNotFoundException("Dangkykham");
+		return dangKyKham;
 	}
 
 	@Override
