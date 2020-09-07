@@ -34,7 +34,7 @@ public class DangKyKham {
 	private Date thoigiankham;
 	
 	@NotNull
-	private boolean trangthaikham;
+	private Boolean trangthaikham;
 	
 	@Size(max = 50)
 	private String noidungkham;

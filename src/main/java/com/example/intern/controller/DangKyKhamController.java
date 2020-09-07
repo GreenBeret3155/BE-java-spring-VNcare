@@ -30,7 +30,7 @@ public class DangKyKhamController {
 										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiankhamBegin,
 									   @RequestParam("thoigiankhamend")
 										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiankhamEnd,
-									   @RequestParam(name = "trangthaikham", required = false)boolean trangthaikham,
+									   @RequestParam(name = "trangthaikham", required = false)Boolean trangthaikham,
 									   @RequestParam(name = "benhnhanid", required = false)Long benhnhanid,
 									   @RequestParam(name = "bacsiid", required = false)Long bacsiid){
 		return dangkykhamService.queryQuery(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,benhnhanid,bacsiid);
