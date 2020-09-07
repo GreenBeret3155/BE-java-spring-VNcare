@@ -11,8 +11,8 @@ import com.example.intern.model.DangKyKham;
 @Repository
 public interface DangKyKhamRepository extends JpaRepository<DangKyKham, Long> {
 	//query
-	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham);
-	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham, Long bacsiid);
-	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBenhnhanId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham, Long benhnhanid);
-	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiIdAndBenhnhanId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, boolean trangthaikham, Long bacsiid, Long benhnhanid);
+	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham);
+	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham, Long bacsiid);
+	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBenhnhanId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham, Long benhnhanid);
+	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikhamAndBacsiIdAndBenhnhanId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham, Long bacsiid, Long benhnhanid);
 }
