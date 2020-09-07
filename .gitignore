@@ -12,11 +12,17 @@ tmp/
 *.bak
 *.swp
 *~.nib
-src/main/resources/application.properties
+/src/main/resources/application.properties
 /target/*
 .settings/
 .loadpath
 .recommenders
 /.idea
 /.settings
+<<<<<<< HEAD
 /target
+=======
+/target
+/vncare.iml
+/README.md
+>>>>>>> 05428424dd7604c9d361fbbf03969957a711d08f

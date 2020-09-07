@@ -2,7 +2,6 @@ package com.example.intern.controller;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +35,12 @@ public class DangKyKhamController {
 		return dangkykhamService.queryQuery(thoigiandkBegin,thoigiandkEnd,thoigiankhamBegin,thoigiankhamEnd,trangthaikham,benhnhanid,bacsiid);
 	}
 
+
 	@GetMapping("/dangkykham/details/{id}")
 	public DangKyKham getOneById(@PathVariable("id")Long id) {
 		return dangkykhamService.getOneById(id);
 	}
-	
+  
 	@PostMapping("/dangkykham/create")
 	public DangKyKham createDangKyKham(@Valid @RequestBody DangKyKham dangkykham) {
 		if(dangkykham.getId() == null) return dangkykhamService.save(dangkykham);
@@ -49,7 +49,6 @@ public class DangKyKhamController {
 
 		return dangkykhamService.save(dangkykham);
 	}
-	
 	
 	@PutMapping("/dangkykham/update/{id}")
 	public DangKyKham createDangKyKham(@PathVariable("id")Long id,
