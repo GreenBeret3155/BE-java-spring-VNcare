@@ -39,11 +39,6 @@ public class KhoaController {
 		return khoaService.getOneById(id);
 	}
 	
-	@GetMapping("/cosoyte/{cosoyteid}/khoa")
-	public List<Khoa> findByCosoyteId(@PathVariable("cosoyteid")  Long cosoyteid){
-		return khoaService.findByCosoyteId(cosoyteid);
-	}
-	
 	@PostMapping("/khoa/create")
 	public Khoa createKhoa(@PathVariable Long id,
 			@Valid @RequestBody Khoa khoa) {

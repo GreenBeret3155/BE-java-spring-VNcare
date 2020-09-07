@@ -23,11 +23,17 @@ public class DangKyKhamController {
 	
 	@Autowired
 	private IDangKyKhamService dangkykhamService;
+	//13 31 58 85
 	
 	@GetMapping("/dangkykham/details/{id}")
 	public DangKyKham getOneById(@PathVariable("id")Long id) {
 		return dangkykhamService.getOneById(id);
 	}
+
+//	@GetMapping("dangkykham/search")
+//	public List<DangKyKham> queryQuery(long a, long b, long c){
+//		return dangkykhamService.queryQuery(a,b,c);
+//	}
 	
 	@PostMapping("/dangkykham/create")
 	public DangKyKham createDangKyKham(@Valid @RequestBody DangKyKham dangkykham) {
@@ -37,7 +43,6 @@ public class DangKyKhamController {
 
 		return dangkykhamService.save(dangkykham);
 	}
-	
 	
 	@PutMapping("/dangkykham/update/{id}")
 	public DangKyKham createDangKyKham(@PathVariable("id")Long id,
