@@ -11,7 +11,6 @@ import com.example.intern.model.DangKyKham;
 @Repository
 public interface DangKyKhamRepository extends JpaRepository<DangKyKham, Long> {
 	//query
-<<<<<<< HEAD
 	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetween(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd);
 	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndTrangthaikham(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Boolean trangthaikham);
 	List<DangKyKham> findAllByThoigiandkBetweenAndThoigiankhamBetweenAndBenhnhanId(Date thoigiandkBegin, Date thoigiandkEnd, Date thoigiankhamBegin, Date thoigiankhamEnd, Long benhnhanid);
