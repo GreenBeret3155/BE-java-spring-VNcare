@@ -36,7 +36,7 @@ public class DangKyKham {
 	@NotNull
 	private Boolean trangthaikham;
 	
-	@Size(max = 50)
+	@Size(max = 500)
 	private String noidungkham;
 	
 	@NotNull
