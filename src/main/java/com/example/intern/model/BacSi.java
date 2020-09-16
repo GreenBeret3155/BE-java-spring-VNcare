@@ -44,7 +44,6 @@ public class BacSi {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "khoaid", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
 	private Khoa khoa;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)

@@ -52,6 +52,19 @@ public class BenhNhan {
 	@NotNull
 	@Size(max = 500)
 	private String diachi;
+
+	@NotNull
+	@Size(max = 300)
+	private String anhdaidien;
+
+	@Size(max = 300)
+	private String anhbhyt;
+
+	@Size(max = 300)
+	private String cmtnd_truoc;
+
+	@Size(max = 300)
+	private String cmtnd_sau;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "taikhoanid", nullable = true )
@@ -76,6 +89,23 @@ public class BenhNhan {
 		this.noicap = noicap;
 		this.bhyt = bhyt;
 		this.diachi = diachi;
+		this.taikhoan = taikhoan;
+	}
+
+	public BenhNhan(Long id, String ten, Date ngaysinh, Boolean gioitinh, String cmnd, Date ngaycap, String noicap, String bhyt, String diachi, String anhdaidien, String anhbhyt, String cmtnd_truoc, String cmtnd_sau, TaiKhoan taikhoan) {
+		this.id = id;
+		this.ten = ten;
+		this.ngaysinh = ngaysinh;
+		this.gioitinh = gioitinh;
+		this.cmnd = cmnd;
+		this.ngaycap = ngaycap;
+		this.noicap = noicap;
+		this.bhyt = bhyt;
+		this.diachi = diachi;
+		this.anhdaidien = anhdaidien;
+		this.anhbhyt = anhbhyt;
+		this.cmtnd_truoc = cmtnd_truoc;
+		this.cmtnd_sau = cmtnd_sau;
 		this.taikhoan = taikhoan;
 	}
 
@@ -157,5 +187,37 @@ public class BenhNhan {
 
 	public void setTaikhoan(TaiKhoan taikhoan) {
 		this.taikhoan = taikhoan;
+	}
+
+	public String getAnhdaidien() {
+		return anhdaidien;
+	}
+
+	public void setAnhdaidien(String anhdaidien) {
+		this.anhdaidien = anhdaidien;
+	}
+
+	public String getAnhbhyt() {
+		return anhbhyt;
+	}
+
+	public void setAnhbhyt(String anhbhyt) {
+		this.anhbhyt = anhbhyt;
+	}
+
+	public String getCmtnd_truoc() {
+		return cmtnd_truoc;
+	}
+
+	public void setCmtnd_truoc(String cmtnd_truoc) {
+		this.cmtnd_truoc = cmtnd_truoc;
+	}
+
+	public String getCmtnd_sau() {
+		return cmtnd_sau;
+	}
+
+	public void setCmtnd_sau(String cmtnd_sau) {
+		this.cmtnd_sau = cmtnd_sau;
 	}
 }
