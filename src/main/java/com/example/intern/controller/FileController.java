@@ -1,7 +1,7 @@
 package com.example.intern.controller;
 
-import com.example.intern.payload.UploadFileResponse;
-import com.example.intern.service.FileStorageService;
+import com.example.intern.model.UploadFileResponse;
+import com.example.intern.service.impl.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FileController {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
+                .path("/api/downloadFile/")
                 .path(fileName)
                 .toUriString();
 

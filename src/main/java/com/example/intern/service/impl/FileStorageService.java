@@ -1,4 +1,4 @@
-package com.example.intern.service;
+package com.example.intern.service.impl;
 
 import com.example.intern.exception.FileStorageException;
 import com.example.intern.exception.MyFileNotFoundException;
@@ -24,6 +24,7 @@ public class FileStorageService {
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
+        System.out.println("5+56"+this.fileStorageLocation);
 
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -44,6 +45,7 @@ public class FileStorageService {
 
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            System.out.println("5"+targetLocation);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;

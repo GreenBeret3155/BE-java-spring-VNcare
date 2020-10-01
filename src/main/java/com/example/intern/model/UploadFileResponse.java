@@ -1,4 +1,4 @@
-package com.example.intern.payload;
+package com.example.intern.model;
 
 public class UploadFileResponse {
     private String fileName;
