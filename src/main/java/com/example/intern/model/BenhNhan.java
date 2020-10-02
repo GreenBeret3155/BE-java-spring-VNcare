@@ -1,5 +1,6 @@
 	package com.example.intern.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -21,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "dm_benhnhan")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class BenhNhan {
+public class BenhNhan implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 

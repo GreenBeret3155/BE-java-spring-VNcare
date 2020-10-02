@@ -27,11 +27,11 @@ public class TaiKhoanController {
 	@Autowired
 	private ITaiKhoanService taikhoanService;
 	
-	@GetMapping("/search")
-	public List<TaiKhoan> queryByEmailAndSdt(@RequestParam(name = "email",required = false)String email,
-			@RequestParam(name = "sdt", required = false)String sdt){
-		return taikhoanService.queryByEmailAndSdt(email,sdt);
-	}
+//	@GetMapping("/search")
+//	public List<TaiKhoan> queryByUsernameAndSdt(@RequestParam(name = "email",required = false)String email,
+//			@RequestParam(name = "sdt", required = false)String sdt){
+//		return taikhoanService.queryByUsernameAndSdt(email,sdt);
+//	}
 	
 	@GetMapping("/details/{id}")
 	public TaiKhoan getOneById(@PathVariable("id")Long id) {
@@ -51,7 +51,7 @@ public class TaiKhoanController {
 	public TaiKhoan updateTaiKhoan (@PathVariable("id")Long id,
 			@Valid @RequestBody TaiKhoan taikhoanRequest) {
 		TaiKhoan taikhoan = taikhoanService.getOneById(id);
-		taikhoan.setEmail(taikhoanRequest.getEmail());
+		taikhoan.setUsername(taikhoanRequest.getUsername());
 		taikhoan.setPassword(taikhoanRequest.getPassword());
 		taikhoan.setSdt(taikhoanRequest.getSdt());
 		taikhoan.setHoten(taikhoanRequest.getHoten());

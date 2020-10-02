@@ -10,7 +10,7 @@ import com.example.intern.model.TaiKhoan;
 @Repository
 public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Long> {
 	//query
-	List<TaiKhoan> findByEmailContaining(String email);
+	TaiKhoan findByUsername(String username);
 	List<TaiKhoan> findBySdtContaining(String sdt);
-	List<TaiKhoan> findByEmailContainingAndSdtContaining(String email, String sdt);
+	List<TaiKhoan> findByUsernameContainingAndSdtContaining(String username, String sdt);
 }

@@ -1,5 +1,7 @@
 package com.example.intern.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +14,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name ="dm_taikhoan")
-@JsonIgnoreProperties({"email","password","sdt","hoten","hibernateLazyInitializer", "handler"})
-public class TaiKhoan {
+@JsonIgnoreProperties({"username","password","sdt","hoten","hibernateLazyInitializer", "handler"})
+public class TaiKhoan implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -21,10 +24,10 @@ public class TaiKhoan {
 	
 	@NotNull
 	@Size(max = 50)
-	private String email;
+	private String username;
 	
 	@NotNull
-	@Size(max = 20)
+	@Size(max = 100)
 	private String password;
 	
 	@NotNull
@@ -40,10 +43,10 @@ public class TaiKhoan {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TaiKhoan(Long id, String email, String password, String sdt, String hoten) {
+	public TaiKhoan(Long id, String username, String password, String sdt, String hoten) {
 		super();
 		this.id = id;
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.sdt = sdt;
 		this.hoten = hoten;
@@ -57,12 +60,12 @@ public class TaiKhoan {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
