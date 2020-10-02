@@ -13,23 +13,23 @@ import com.example.intern.model.DonViTinh;
 import com.example.intern.service.IDonViTinhService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/donvitinh")
 public class DonViTinhController {
 	
 	@Autowired
 	private IDonViTinhService donvitinhService;
 
-	@GetMapping("/donvitinh/search")
+	@GetMapping("/search")
 	public List<DonViTinh> queryDonViTinh(@RequestParam(name = "ten", required = false )String ten){
 		return donvitinhService.queryByTen(ten);
 	}
 	
-	@GetMapping("/donvitinh/details/{id}")
+	@GetMapping("/details/{id}")
 	public DonViTinh getOneById(@PathVariable("id") Long id) {
 		return donvitinhService.getOneById(id);
 	}
 	
-	@PostMapping("/donvitinh/create")
+	@PostMapping("/create")
 	public DonViTinh createDonViTinh(@Valid @RequestBody DonViTinh donvitinh) {
 		if(donvitinh.getId() == null) return donvitinhService.save(donvitinh);
 		DonViTinh donvitinh2 = donvitinhService.getOneById(donvitinh.getId());
@@ -38,7 +38,7 @@ public class DonViTinhController {
 		return donvitinhService.save(donvitinh);
 	}
 	
-	@PutMapping("/donvitinh/update/{id}")
+	@PutMapping("/update/{id}")
 	public DonViTinh updateDonViTinh(@PathVariable("id")Long id,
 			@Valid @RequestBody DonViTinh donvitinhRequest) {
 		DonViTinh donvitinh = donvitinhService.getOneById(id);
@@ -48,7 +48,7 @@ public class DonViTinhController {
 		return donvitinhService.save(donvitinh);
 	}
 	
-	@DeleteMapping("/donvitinh/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteDonViTinh(@PathVariable("id") Long id) {
 		donvitinhService.delete(id);
 		return ResponseEntity.ok().build();

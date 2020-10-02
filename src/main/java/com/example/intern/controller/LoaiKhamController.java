@@ -17,48 +17,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.intern.exception.DuplicateIdException;
-import com.example.intern.model.Tinh;
-import com.example.intern.service.ITinhService; 
-  
+import com.example.intern.model.LoaiKham;
+import com.example.intern.service.ILoaiKhamService;
+
 @RestController
-@RequestMapping("/api/tinh")
-public class TinhController {
-	
+@RequestMapping("/api/loaikham")
+public class LoaiKhamController {
+
 	@Autowired
-	private ITinhService service;
+	private ILoaiKhamService service;
 	
 	@GetMapping("/search")
-	public List<Tinh> queryTinh(@RequestParam(name = "ten", required = false )String ten){
+	public List<LoaiKham> queryLoaiKham(@RequestParam(name = "ten", required = false )String ten){
 		return service.queryByTen(ten);
 	}
 	
 	@GetMapping("/details/{id}")
-	public Tinh getTinhById( @PathVariable("id") Long id ) {
+	public LoaiKham getLoaiKhamById( @PathVariable("id") Long id ) {
 		return service.getOneById(id);
 	}
 	
 	@PostMapping("/create")	
-	public Tinh createTinh( @Valid @RequestBody Tinh tinh) {
-		if(tinh.getId() == null) return service.save(tinh);
-		Tinh tinh2 = service.getOneById(tinh.getId());
-		if(tinh2 != null) throw new DuplicateIdException("Tinh", tinh.getId());
-		return service.save(tinh);
+	public LoaiKham createLoaiKham( @Valid @RequestBody LoaiKham loaikham) {
+		if(loaikham.getId() == null) return service.save(loaikham);
+		LoaiKham loaikham2 = service.getOneById(loaikham.getId());
+		if(loaikham2 != null) throw new DuplicateIdException("LoaiKham", loaikham.getId());
+		return service.save(loaikham);
 	}
 	
 	@PutMapping("/update/{id}")
-	public Tinh updateTinh(@PathVariable("id") Long id,  
-			@Valid @RequestBody Tinh tinhRequest) {
-		Tinh tinh = service.getOneById(id);
-		tinh.setTen(tinhRequest.getTen());
+	public LoaiKham updateLoaiKham(@PathVariable("id") Long id,  
+			@Valid @RequestBody LoaiKham loaikhamRequest) {
+		LoaiKham loaikham = service.getOneById(id);
+		loaikham.setTen(loaikhamRequest.getTen());
 		
-		return service.save(tinh);
+		return service.save(loaikham);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteTinh(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteLoaiKham(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	
 }
-

@@ -23,7 +23,7 @@ import com.example.intern.model.BenhNhan;
 import com.example.intern.model.QuanHe;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/quanhe")
 public class QuanHeController {
 	
 	@Autowired
@@ -33,13 +33,13 @@ public class QuanHeController {
 	private IBenhNhanService benhnhanService;
 	
 	
-	@GetMapping("/quanhe/search")
+	@GetMapping("/search")
 	public List<QuanHe> queryByBenhnhanchinhIdAndBenhnhanphuId(@RequestParam(name = "idchinh", required = false)Long benhnhanchinhid ,
 			@RequestParam(name = "idphu", required = false)Long benhnhanphuid){
 		return quanheService.queryByBenhnhanchinhIdAndBenhnhanphuId(benhnhanchinhid,benhnhanphuid);
 	}
 	
-	@PostMapping("/quanhe/create")
+	@PostMapping("/create")
 	public QuanHe createQuanHe(@Valid @RequestBody QuanHe quanheRequest) {
 		if(quanheRequest.getId() == null) return quanheService.save(quanheRequest);
 		QuanHe quanhe2 = quanheService.getOneById(quanheRequest.getId());
@@ -48,7 +48,7 @@ public class QuanHeController {
 		return quanheService.save(quanheRequest);
 	}
 	
-	@PutMapping("/quanhe/update/{id}")
+	@PutMapping("/update/{id}")
 	public QuanHe updateQuanHe(@PathVariable("id")Long id,
 			@Valid @RequestBody QuanHe quanheRequest) {
 		QuanHe quanhe = quanheService.getOneById(id);
@@ -59,7 +59,7 @@ public class QuanHeController {
 		return quanheService.save(quanhe);
 	}
 	
-	@DeleteMapping("/quanhe/{benhnhanchinhid}/{benhnhanphuid}")
+	@DeleteMapping("/{benhnhanchinhid}/{benhnhanphuid}")
 	public ResponseEntity<?> deleteQuanHe(@PathVariable("benhnhanchinhid")Long benhnhanchinhid,
 			@PathVariable("benhnhanphuid")Long benhnhanphuid) {
 		BenhNhan benhnhanchinh = benhnhanService.getOneById(benhnhanchinhid);

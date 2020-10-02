@@ -14,13 +14,13 @@ import com.example.intern.model.DangKyKham;
 import com.example.intern.service.IDangKyKhamService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/dangkykham")
 public class DangKyKhamController {
 	
 	@Autowired
 	private IDangKyKhamService dangkykhamService;
 
-	@GetMapping("/dangkykham/search")
+	@GetMapping("/search")
 	public List<DangKyKham> queryQuery(@RequestParam("thoigiandkbegin")
 										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)Date thoigiandkBegin,
 									   @RequestParam("thoigiandkend")
@@ -36,12 +36,12 @@ public class DangKyKhamController {
 	}
 
 
-	@GetMapping("/dangkykham/details/{id}")
+	@GetMapping("/details/{id}")
 	public DangKyKham getOneById(@PathVariable("id")Long id) {
 		return dangkykhamService.getOneById(id);
 	}
   
-	@PostMapping("/dangkykham/create")
+	@PostMapping("/create")
 	public DangKyKham createDangKyKham(@Valid @RequestBody DangKyKham dangkykham) {
 		if(dangkykham.getId() == null) return dangkykhamService.save(dangkykham);
 		DangKyKham dangkykham2 = dangkykhamService.getOneById(dangkykham.getId());
@@ -50,7 +50,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykham);
 	}
 	
-	@PutMapping("/dangkykham/update/{id}")
+	@PutMapping("/update/{id}")
 	public DangKyKham createDangKyKham(@PathVariable("id")Long id,
 			@Valid @RequestBody DangKyKham dangkykhamRequest) {
 		DangKyKham dangkykham = dangkykhamService.getOneById(id);
@@ -69,7 +69,7 @@ public class DangKyKhamController {
 		return dangkykhamService.save(dangkykham);
 	}
 	
-	@DeleteMapping("/dangkykham/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id")Long id) {
 		dangkykhamService.delete(id);
 		return ResponseEntity.ok().build();

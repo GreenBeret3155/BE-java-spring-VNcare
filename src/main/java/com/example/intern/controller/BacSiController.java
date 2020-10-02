@@ -20,31 +20,31 @@ import com.example.intern.model.BacSi;
 import com.example.intern.service.IBacSiService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/bacsi")
 public class BacSiController {
 	
 	@Autowired 
 	private IBacSiService bacsiService;
 	
 	
-	@GetMapping("/bacsi/search")
+	@GetMapping("/search")
 	public List<BacSi> queryByTenAndTrinhdoAndKhoaId(@RequestParam(name = "ten", required = false)String ten ,
 			@RequestParam (name = "trinhdo", required = false)String trinhdo,
 			@RequestParam(name = "khoaid", required = false)Long khoaid){
 		return bacsiService.queryByTenAndTrinhdoAndKhoaId(ten,trinhdo,khoaid);
 	}
 	
-	@GetMapping("/bacsi/details/{id}")
+	@GetMapping("/details/{id}")
 	public BacSi getOneById(@PathVariable("id") Long id) {
 		return bacsiService.getOneById(id);
 	}
 	
-	@PostMapping("/bacsi/create")
+	@PostMapping("/create")
 	public BacSi createBacSi(@Valid @RequestBody BacSi bacsi) {
 		return bacsiService.save(bacsi);
 	}
 	
-	@PutMapping("/bacsi/update/{id}")
+	@PutMapping("/update/{id}")
 	public BacSi updateBacSiByKhoaId(@PathVariable("id") Long id,
 			@Valid @RequestBody BacSi bacsiRequest) {
 		BacSi bacsi = bacsiService.getOneById(id);
@@ -58,7 +58,7 @@ public class BacSiController {
 		return bacsiService.save(bacsi);
 	}
 	
-	@DeleteMapping("/bacsi/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteBacSi(@PathVariable("id") Long id) {
 		bacsiService.delete(id);
 		return ResponseEntity.ok().build();

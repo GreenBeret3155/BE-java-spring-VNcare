@@ -21,24 +21,24 @@ import com.example.intern.model.TaiKhoan;
 import com.example.intern.service.ITaiKhoanService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/taikhoan")
 public class TaiKhoanController {
 	
 	@Autowired
 	private ITaiKhoanService taikhoanService;
 	
-	@GetMapping("/taikhoan/search")
+	@GetMapping("/search")
 	public List<TaiKhoan> queryByEmailAndSdt(@RequestParam(name = "email",required = false)String email,
 			@RequestParam(name = "sdt", required = false)String sdt){
 		return taikhoanService.queryByEmailAndSdt(email,sdt);
 	}
 	
-	@GetMapping("/taikhoan/details/{id}")
+	@GetMapping("/details/{id}")
 	public TaiKhoan getOneById(@PathVariable("id")Long id) {
 		return taikhoanService.getOneById(id);
 	}
 
-	@PostMapping("/taikhoan/create")
+	@PostMapping("/create")
 	public TaiKhoan createTaiKhoan(@Valid @RequestBody TaiKhoan taikhoan ) {
 		if(taikhoan.getId() == null) return taikhoanService.save(taikhoan);
 		TaiKhoan taikhoan2 = taikhoanService.getOneById(taikhoan.getId());
@@ -47,7 +47,7 @@ public class TaiKhoanController {
 		return taikhoanService.save(taikhoan);
 	}
 
-	@PutMapping("/taikhoan/update/{id}")
+	@PutMapping("/update/{id}")
 	public TaiKhoan updateTaiKhoan (@PathVariable("id")Long id,
 			@Valid @RequestBody TaiKhoan taikhoanRequest) {
 		TaiKhoan taikhoan = taikhoanService.getOneById(id);
@@ -59,7 +59,7 @@ public class TaiKhoanController {
 		return taikhoanService.save(taikhoan);
 	}
 	
-	@DeleteMapping("/taikhoan/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteTaiKhoan(@PathVariable("id") Long id) {
 		taikhoanService.delete(id);
 		return ResponseEntity.ok().build();

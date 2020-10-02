@@ -21,30 +21,25 @@ import com.example.intern.model.CoSoYTe;
 import com.example.intern.service.ICoSoYTeService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cosoyte")
 public class CoSoYTeController {
 	
 	@Autowired
 	public ICoSoYTeService cosoyteService;
 	
 	
-	@GetMapping("/cosoyte/search")
+	@GetMapping("/search")
 	public List<CoSoYTe> getAll(@RequestParam(name = "ten", required = false)String ten,
 			@RequestParam(name = "tinhid", required = false)Long  tinhid){
 		return cosoyteService.queryByTenAndTinh(ten, tinhid);
 	}
 	
-	@GetMapping("/cosoyte/details/{id}")
+	@GetMapping("/details/{id}")
 	public CoSoYTe getOneById(@PathVariable("id") Long id  ) {
 		return cosoyteService.getOneById(id);
 	}
 	
-	@GetMapping("/tinh/{tinhid}/cosoyte")
-	public List<CoSoYTe> finhByTinhId(@PathVariable("tinhid") Long tinhid){
-		return cosoyteService.findByTinhId(tinhid);
-	}
-	
-	@PostMapping("/cosoyte/create")
+	@PostMapping("/create")
 	public CoSoYTe createCoSoYTe(@Valid @RequestBody CoSoYTe cosoyte) {
 		if(cosoyte.getId() == null) return cosoyteService.save(cosoyte);
 		CoSoYTe cosoyte2 = cosoyteService.getOneById(cosoyte.getId());
@@ -54,7 +49,7 @@ public class CoSoYTeController {
 	}
 	
 	
-	@PutMapping("/cosoyte/update/{id}")
+	@PutMapping("/update/{id}")
 	public CoSoYTe updateCoSoYTeByTinhId(@PathVariable("id") Long id,
 			@Valid @RequestBody CoSoYTe cosoyte ) {
 		CoSoYTe cs = cosoyteService.getOneById(id);
@@ -64,7 +59,7 @@ public class CoSoYTeController {
 		return cosoyteService.save(cs);
 	}
 	
-	@DeleteMapping("/cosoyte/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		cosoyteService.delete(id);
 		return ResponseEntity.ok().build();

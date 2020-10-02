@@ -39,8 +39,10 @@ public class DangKyKham {
 	@Size(max = 500)
 	private String noidungkham;
 	
-	@NotNull
-	private int loaikham;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false )
+	@JoinColumn(name = "loaikhamid", nullable= false )
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private LoaiKham loaikham;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false )
 	@JoinColumn(name = "benhchinhid", nullable= true )
@@ -70,7 +72,7 @@ public class DangKyKham {
 	}
 
 	public DangKyKham(Long id, Date thoigiandk, Date thoigiankham, boolean trangthaikham, String noidungkham,
-			int loaikham, Benh benh, String benhphu, String mota, BenhNhan benhnhan, BacSi bacsi) {
+			LoaiKham loaikham, Benh benh, String benhphu, String mota, BenhNhan benhnhan, BacSi bacsi) {
 		super();
 		this.id = id;
 		this.thoigiandk = thoigiandk;
@@ -125,11 +127,11 @@ public class DangKyKham {
 		this.noidungkham = noidungkham;
 	}
 
-	public int getLoaikham() {
+	public LoaiKham getLoaikham() {
 		return loaikham;
 	}
 
-	public void setLoaikham(int loaikham) {
+	public void setLoaikham(LoaiKham loaikham) {
 		this.loaikham = loaikham;
 	}
 

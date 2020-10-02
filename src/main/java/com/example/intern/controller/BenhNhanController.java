@@ -23,7 +23,7 @@ import com.example.intern.service.IBenhNhanService;
 import com.example.intern.service.IQuanHeService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/benhnhan")
 public class BenhNhanController {
 	
 	@Autowired
@@ -32,21 +32,21 @@ public class BenhNhanController {
 	@Autowired
 	private IQuanHeService quanheService;
 	
-	@GetMapping("/benhnhan/search")
+	@GetMapping("/search")
 	public List<BenhNhan> getAll(@RequestParam(name = "ten", required = false)String ten,
 			@RequestParam(name = "gioitinh",required = false)Boolean gioitinh,
 			@RequestParam(name = "diachi",required = false)String diachi){
 		return benhnhanService.queryByTenAndNgaysinhAndDiachi(ten,gioitinh,diachi);
 	}
 	
-	@GetMapping("/benhnhan/details/{id}")
+	@GetMapping("/details/{id}")
 	public BenhNhan getOneById(@PathVariable("id") Long id) {
 		return benhnhanService.getOneById(id);
 	}
 	
 	
 	
-	@PostMapping("/benhnhan/create")
+	@PostMapping("/create")
 	public BenhNhan createBenhNhan(@Valid @RequestBody BenhNhan benhnhan) {
 		if(benhnhan.getId() == null) return benhnhanService.save(benhnhan);
 		BenhNhan benhnhan2 = benhnhanService.getOneById(benhnhan.getId());
@@ -58,7 +58,7 @@ public class BenhNhanController {
 	}
 	
 	
-	@PutMapping("/benhnhan/update/{id}")
+	@PutMapping("/update/{id}")
 	public BenhNhan updateBenhNhan(@PathVariable("id")Long id,
 			@Valid @RequestBody BenhNhan benhnhanRequest) {
 		BenhNhan benhnhan = benhnhanService.getOneById(id);
@@ -75,7 +75,7 @@ public class BenhNhanController {
 		return benhnhanService.save(benhnhan);
 	}
 	
-	@DeleteMapping("/benhnhan/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteBenhNhan(@PathVariable("id") Long id) {
 		benhnhanService.delete(id);
 		return ResponseEntity.ok().build();

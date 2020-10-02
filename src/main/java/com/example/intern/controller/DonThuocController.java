@@ -13,13 +13,13 @@ import com.example.intern.model.DonThuoc;
 import com.example.intern.service.IDonThuocService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/donthuoc")
 public class DonThuocController {
 	
 	@Autowired
 	private IDonThuocService donthuocService;
 	
-	@GetMapping("/donthuoc/details/{id}")
+	@GetMapping("/details/{id}")
 	public DonThuoc getOneById(@PathVariable("id")Long id) {
 		return donthuocService.getOneById(id);
 	}
@@ -30,7 +30,7 @@ public class DonThuocController {
 		return donthuocService.queryByDangKyKhamIdAndTenThuoc(dangkykhamId,thuocId);
 	}
 	
-	@PostMapping("/donthuoc/create")
+	@PostMapping("/create")
 	public DonThuoc createDonThuoc (@Valid @RequestBody DonThuoc donthuoc) {
 		if(donthuoc.getId() == null) return donthuocService.save(donthuoc);
 		DonThuoc donthuoc2 = donthuocService.getOneById(donthuoc.getId());
@@ -39,7 +39,7 @@ public class DonThuocController {
 		return donthuocService.save(donthuoc);
 	}
 	
-	@PutMapping("/donthuoc/update/{id}")
+	@PutMapping("/update/{id}")
 	public DonThuoc updateDonThuoc (@PathVariable("id")Long id,
 			@Valid @RequestBody DonThuoc donthuocRequest) {
 		DonThuoc donthuoc = donthuocService.getOneById(id);
@@ -52,17 +52,9 @@ public class DonThuocController {
 		return donthuocService.save(donthuocRequest);
 	}
 	
-	@DeleteMapping("/donthuoc/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteDonThuoc(@PathVariable("id")Long id) {
 		donthuocService.deleteByDangkykhamId(id);
 		return ResponseEntity.ok().build();
 	}
-	
-	
-//	@DeleteMapping("/dangkykham/{dangkykhamid}/donthuoc")
-//	public ResponseEntity<?> deleteDonThuocByDangkykhamId(@PathVariable("dangkykhamid")Long dangkykhamid) {
-//		donthuocService.deleteByDangkykhamId(dangkykhamid);
-//		return ResponseEntity.ok().build();
-//	}
-	
 }

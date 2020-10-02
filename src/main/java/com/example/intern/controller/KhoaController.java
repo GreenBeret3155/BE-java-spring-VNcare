@@ -21,25 +21,25 @@ import com.example.intern.model.Khoa;
 import com.example.intern.service.IKhoaService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/khoa")
 public class KhoaController {
 	
 	@Autowired
 	private IKhoaService khoaService;
 	
 	
-	@GetMapping("/khoa/search")
+	@GetMapping("/search")
 	public List<Khoa> queryByTenAndCosoyteId(@RequestParam(name = "ten", required = false )String ten,
 			@RequestParam(name = "cosoyteid", required = false)Long cosoyteid){
 		return khoaService.queryByTenAndCosoyteId(ten,cosoyteid);
 	}
 	
-	@GetMapping("/khoa/details/{id}")
+	@GetMapping("/details/{id}")
 	public Khoa getOneById(@PathVariable("id") Long id) {
 		return khoaService.getOneById(id);
 	}
 	
-	@PostMapping("/khoa/create")
+	@PostMapping("/create")
 	public Khoa createKhoa(@PathVariable Long id,
 			@Valid @RequestBody Khoa khoa) {
 		if(khoa.getId() == null) return khoaService.save(khoa);
@@ -49,7 +49,7 @@ public class KhoaController {
 		return khoaService.save(khoa);
 	}
 	
-	@PutMapping("/khoa/update/{id}")
+	@PutMapping("/update/{id}")
 	public Khoa updateKhoa(@PathVariable("id") Long id,
 			@Valid @RequestBody Khoa khoaRequest){
 		Khoa khoa = khoaService.getOneById(id);
@@ -60,7 +60,7 @@ public class KhoaController {
 	}
 	
 	
-	@DeleteMapping("/khoa/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteKhoa(@PathVariable("id") Long id) {
 		khoaService.delete(id);
 		return ResponseEntity.ok().build();

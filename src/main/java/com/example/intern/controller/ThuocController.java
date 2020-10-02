@@ -13,23 +13,23 @@ import com.example.intern.model.Thuoc;
 import com.example.intern.service.IThuocService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/thuoc")
 public class ThuocController {
 	
 	@Autowired
 	private IThuocService thuocService;
 
-	@GetMapping("/thuoc/search")
+	@GetMapping("/search")
 	public List<Thuoc> queryThuoc(@RequestParam(name = "ten", required = false )String ten){
 		return thuocService.queryByTen(ten);
 	}
 
-	@GetMapping("/thuoc/details/{id}")
+	@GetMapping("/details/{id}")
 	public Thuoc getOneById(@PathVariable("id") Long id) {
 		return thuocService.getOneById(id);
 	}
 	
-	@PostMapping("/thuoc/create")
+	@PostMapping("/create")
 	public Thuoc createThuoc (@Valid @RequestBody Thuoc thuoc) {
 		if(thuoc.getId() == null) return thuocService.save(thuoc);
 		Thuoc thuoc2 = thuocService.getOneById(thuoc.getId());
@@ -38,7 +38,7 @@ public class ThuocController {
 		return thuocService.save(thuoc);
 	}
 	
-	@PutMapping("/thuoc/update/{id}")
+	@PutMapping("/update/{id}")
 	public Thuoc updateThuoc ( @PathVariable("id") Long id,	
 			@Valid @RequestBody Thuoc thuocRequest) {
 		Thuoc thuoc = thuocService.getOneById(id);
@@ -48,7 +48,7 @@ public class ThuocController {
 		return thuocService.save(thuoc);
 	}
 	
-	@DeleteMapping("/thuoc/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteThuoc(@PathVariable("id")Long id) {
 		thuocService.delete(id);
 		return ResponseEntity.ok().build();
