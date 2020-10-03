@@ -49,12 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .anonymous().disable()
-//                .authorizeRequests()
-//                .antMatchers("/api/**").permitAll();
-		http.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/api/**").hasRole("ADMIN");
+		http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/error").permitAll()
+                .anyRequest().authenticated();
 	}
 
 	@Bean

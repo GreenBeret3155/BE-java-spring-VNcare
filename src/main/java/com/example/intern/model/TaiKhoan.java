@@ -1,11 +1,16 @@
 package com.example.intern.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,7 +32,7 @@ public class TaiKhoan implements Serializable{
 	private String username;
 	
 	@NotNull
-	@Size(max = 100)
+	@Size(max = 60)
 	private String password;
 	
 	@NotNull
@@ -36,6 +41,14 @@ public class TaiKhoan implements Serializable{
 	
 	@Size(max = 50)
 	private String hoten;
+	
+	@ManyToMany(fetch = FetchType.EAGER )
+    @JoinTable(
+            name = "dm_taikhoan_vaitro",
+            joinColumns = @JoinColumn(name = "taikhoanid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "vaitroid", nullable = false)
+    )
+    private Set<VaiTro> roles;
 	
 	
 	//constructor and getter setter
@@ -90,5 +103,13 @@ public class TaiKhoan implements Serializable{
 
 	public void setHoten(String hoten) {
 		this.hoten = hoten;
+	}
+
+	public Set<VaiTro> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<VaiTro> roles) {
+		this.roles = roles;
 	}
 }

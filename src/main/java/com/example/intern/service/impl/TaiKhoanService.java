@@ -1,11 +1,11 @@
 package com.example.intern.service.impl;
 
-import java.util.List;
-import java.util.Arrays;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.example.intern.exception.ResourceNotFoundException;
 import com.example.intern.model.TaiKhoan;
+import com.example.intern.model.VaiTro;
 import com.example.intern.repository.TaiKhoanRepository;
 import com.example.intern.service.ITaiKhoanService;
 
@@ -40,17 +41,19 @@ public class TaiKhoanService implements UserDetailsService, ITaiKhoanService {
 //		return taikhoan;
 //	}
 	
-	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        TaiKhoan user = taikhoanRepository.findByUsername(userId);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        TaiKhoan user = taikhoanRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(String.valueOf(user.getId()), user.getPassword(), getAuthority());
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        Set<VaiTro> roles = user.getRoles();
+        for (VaiTro role : roles) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getTen()));
+        }
+        return new org.springframework.security.core.userdetails.User(String.valueOf(user.getId()), user.getPassword(), grantedAuthorities);
     }
 	
-	private List<SimpleGrantedAuthority> getAuthority() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-    }
 	
 	@Override
 	public TaiKhoan getOneById(Long id) throws ResourceNotFoundException{

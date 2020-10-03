@@ -20,7 +20,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-    	System.out.println("http request");
         http.
                 anonymous().disable()
                 .authorizeRequests()
