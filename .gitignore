@@ -3,7 +3,6 @@
 .settings
 .idea
 vncare.iml
-pom.xml
 README.md
 .metadata
 bin/
