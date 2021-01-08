@@ -24,7 +24,7 @@ public class DonThuocController {
 		return donthuocService.getOneById(id);
 	}
 	
-	@GetMapping("donthuoc/search")
+	@GetMapping("/search")
 	public List<DonThuoc> queryByDangKyKhamIdAndTenThuoc(@RequestParam(name = "dangkykhamid", required = false)Long dangkykhamId,
 														 @RequestParam(name = "tenthuoc", required = false)Long thuocId){
 		return donthuocService.queryByDangKyKhamIdAndTenThuoc(dangkykhamId,thuocId);

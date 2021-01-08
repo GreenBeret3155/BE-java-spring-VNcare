@@ -70,12 +70,12 @@ public class BenhNhanService implements IBenhNhanService {
 		return benhnhan;
 	}
 	
-//	@Override
-//	public BenhNhan findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
-//		BenhNhan benhnhan = benhnhanRepository.findByTaikhoanId(taikhoanid);
-//		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","taikhoanid",taikhoanid);
-//		return benhnhan;
-//	}
+	@Override
+	public BenhNhan findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
+		BenhNhan benhnhan = benhnhanRepository.findByTaikhoanId(taikhoanid);
+		if(benhnhan == null ) throw new ResourceNotFoundException("BenhNhan","taikhoanid",taikhoanid);
+		return benhnhan;
+	}
 	
 	@Override
 	public BenhNhan save(BenhNhan benhnhan) {

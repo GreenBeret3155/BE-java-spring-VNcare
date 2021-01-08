@@ -67,13 +67,7 @@ public class BacSiService implements IBacSiService {
 		if(bacsi == null) throw new ResourceNotFoundException("BacSi","id",id);
 		return bacsi;
 	}
-	
-//	@Override
-//	public BacSi findByTaikhoanId(Long taikhoanid) throws ResourceNotFoundException{
-//		BacSi bacsi = bacsiRepository.findByTaikhoanId(taikhoanid);
-//		if(bacsi == null) throw new ResourceNotFoundException("BacSi","taikhoanid",taikhoanid);
-//		return bacsi;
-//	}
+
 	
 	@Override
 	public BacSi save(BacSi bacsi) {

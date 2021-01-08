@@ -8,6 +8,7 @@ public interface IBenhNhanService {
 	
 	List<BenhNhan> queryByTenAndNgaysinhAndDiachi(String ten, Boolean gioitinh, String diachi);
 	BenhNhan getOneById(Long id);
+	BenhNhan findByTaikhoanId(Long taikhoanid);
 	BenhNhan save(BenhNhan benhnhan);
 	void delete(Long id);
 }

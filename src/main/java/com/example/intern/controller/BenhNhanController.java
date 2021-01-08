@@ -39,11 +39,15 @@ public class BenhNhanController {
 		return benhnhanService.queryByTenAndNgaysinhAndDiachi(ten,gioitinh,diachi);
 	}
 	
+	@GetMapping("/search/{id}")
+	public Long getBNidByTkid(@PathVariable("id")Long id) {
+		return benhnhanService.findByTaikhoanId(id).getId();
+	}
+	
 	@GetMapping("/details/{id}")
 	public BenhNhan getOneById(@PathVariable("id") Long id) {
 		return benhnhanService.getOneById(id);
 	}
-	
 	
 	
 	@PostMapping("/create")
